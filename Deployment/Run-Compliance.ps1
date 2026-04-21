@@ -24,6 +24,9 @@ foreach ($s in $Sessions) {
 # 3. Ra lệnh cho Client tự động chạy tiến trình ngầm
 Write-Host ">>> [3] DANG THUC THI AUDIT & REMEDIATE TREN CLIENTS... <<<" -ForegroundColor Yellow
 $RawResults = Invoke-Command -Session $Sessions -ScriptBlock {
+    # THÊM DÒNG NÀY ĐỂ MỞ KHÓA CHO CLIENT:
+    Set-ExecutionPolicy Bypass -Scope Process -Force
+
     Set-Location "C:\CIS_Temp"
     
     # Nạp module vào bộ nhớ Client
