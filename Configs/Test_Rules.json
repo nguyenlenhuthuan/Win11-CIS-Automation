@@ -1,0 +1,26 @@
+[
+  {
+    "RuleID": "1.1.4",
+    "Type": "Secpol",
+    "Description": "Ensure 'Minimum password length' is set to 14 or more character(s)",
+    "Path": "Security Settings\\Account Policies\\Password Policy",
+    "KeyName": "MinimumPasswordLength",
+    "ExpectedValue": "14"
+  },
+  {
+    "RuleID": "5.42",
+    "Type": "Service",
+    "Description": "Ensure 'Xbox Live Auth Manager (XblAuthManager)' is set to 'Disabled'",
+    "Path": "XblAuthManager",
+    "KeyName": "Start",
+    "ExpectedValue": "4"
+  },
+  {
+    "RuleID": "18.8.4.1",
+    "Type": "Registry",
+    "Description": "Ensure 'Turn off Autoplay' is set to 'Enabled: All drives'",
+    "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+    "KeyName": "NoDriveTypeAutoRun",
+    "ExpectedValue": "255"
+  }
+]
