@@ -4,8 +4,8 @@ $ServerLogPath = "..\Logs\Compliance_Report.csv"
 Write-Host ">>> [1] KHOI DONG LUONG DIEU PHOI WINRM <<<" -ForegroundColor Cyan
 
 # Bước 1: Tạo phiên kết nối WinRM đa luồng đến các máy Client
-# (Lệnh này sẽ hiện bảng popup yêu cầu bạn nhập User/Pass của máy Client)
-$Credentials = Get-Credential -Message "Nhap tai khoan Admin cua may Client (VD: Administrator)"
+$Password = ConvertTo-SecureString "nguyendinhtri" -AsPlainText -Force
+$Credentials = New-Object System.Management.Automation.PSCredential ("pca", $Password)
 $Sessions = New-PSSession -ComputerName $Clients -Credential $Credentials
 
 # Bước 2: Chuẩn bị môi trường và đẩy file sang Client
