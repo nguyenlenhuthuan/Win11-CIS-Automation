@@ -1,0 +1,2175 @@
+{
+  "metadata": {
+    "title": "CIS Windows 11 Benchmark - Rules Database",
+    "version": "2.0",
+    "created": "2026-04-21",
+    "total_rules": 316,
+    "description": "Bộ từ điển luật CIS Windows 11 dùng cho hệ thống tự động hóa kiểm tra bảo mật",
+    "sources": [
+      "Tự_động_hoá_-_Thuận.pdf",
+      "Tự_động_hoá_-_Thông_1-2.pdf",
+      "Tự_động_hoá_-_Automation.pdf"
+    ],
+    "intervention_types": {
+      "Registry": "Chỉnh sửa qua Registry Editor (regedit)",
+      "Secpol": "Chỉnh sửa qua Local Security Policy (secpol.msc)",
+      "Service": "Quản lý dịch vụ Windows (services.msc)",
+      "GPO": "Group Policy Object (gpedit.msc)",
+      "Secedit": "Security Configuration via secedit"
+    }
+  },
+  "rules": [
+    {
+      "id": "1.1.1", "name": "Enforce password history",
+      "description": "Xác định số lượng mật khẩu mới và duy nhất phải được liên kết với tài khoản trước khi có thể sử dụng lại mật khẩu cũ.",
+      "category": "Account Policies / Password Policy", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Account Policies\\Password Policy",
+      "key_name": "Enforce password history", "expected_value": "24 or more password(s)", "expected_value_raw": 24, "value_type": "NUMBER",
+      "remediation": "Set to 24 or more via secpol.msc > Account Policies > Password Policy"
+    },
+    {
+      "id": "1.1.2", "name": "Maximum password age",
+      "description": "Xác định thời gian tối đa người dùng có thể sử dụng mật khẩu trước khi hết hạn.",
+      "category": "Account Policies / Password Policy", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Account Policies\\Password Policy",
+      "key_name": "Maximum password age", "expected_value": "365 or fewer days, but not 0", "expected_value_raw": 365, "value_type": "NUMBER",
+      "remediation": "Set to 365 or fewer (not 0) via secpol.msc"
+    },
+    {
+      "id": "1.1.3", "name": "Minimum password age",
+      "description": "Xác định số ngày tối thiểu phải sử dụng mật khẩu trước khi có thể thay đổi.",
+      "category": "Account Policies / Password Policy", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Account Policies\\Password Policy",
+      "key_name": "Minimum password age", "expected_value": "1 or more day(s)", "expected_value_raw": 1, "value_type": "NUMBER",
+      "remediation": "Set to 1 or more days via secpol.msc"
+    },
+    {
+      "id": "1.1.4", "name": "Minimum password length",
+      "description": "Quy định số lượng ký tự ít nhất tạo nên mật khẩu cho tài khoản người dùng.",
+      "category": "Account Policies / Password Policy", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Account Policies\\Password Policy",
+      "key_name": "Minimum password length", "expected_value": "14 or more character(s)", "expected_value_raw": 14, "value_type": "NUMBER",
+      "remediation": "Set to 14 or more via secpol.msc"
+    },
+    {
+      "id": "1.1.5", "name": "Password must meet complexity requirements",
+      "description": "Kiểm tra tất cả mật khẩu mới để đảm bảo đáp ứng các yêu cầu cơ bản về mật khẩu mạnh.",
+      "category": "Account Policies / Password Policy", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Account Policies\\Password Policy",
+      "key_name": "Password must meet complexity requirements", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Enable via secpol.msc > Account Policies > Password Policy"
+    },
+    {
+      "id": "1.1.6", "name": "Relax minimum password length limits",
+      "description": "Xác định xem giới hạn độ dài mật khẩu tối thiểu có thể được tăng vượt quá giới hạn cũ là 14 ký tự hay không.",
+      "category": "Account Policies / Password Policy", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Account Policies\\Password Policy",
+      "key_name": "Relax minimum password length limits", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Enable via secpol.msc"
+    },
+    {
+      "id": "1.1.7", "name": "Store passwords using reversible encryption",
+      "description": "Xác định xem hệ điều hành có lưu trữ mật khẩu bằng cách sử dụng mã hóa có thể dịch ngược hay không.",
+      "category": "Account Policies / Password Policy", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Account Policies\\Password Policy",
+      "key_name": "Store passwords using reversible encryption", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Disable via secpol.msc"
+    },
+    {
+      "id": "1.2.1", "name": "Account lockout duration",
+      "description": "Xác định khoảng thời gian phải trôi qua trước khi tài khoản bị khóa được mở và có thể thử đăng nhập lại.",
+      "category": "Account Policies / Account Lockout Policy", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Account Policies\\Account Lockout Policy",
+      "key_name": "Account lockout duration", "expected_value": "15 or more minute(s)", "expected_value_raw": 15, "value_type": "NUMBER",
+      "remediation": "Set to 15 or more minutes via secpol.msc"
+    },
+    {
+      "id": "1.2.2", "name": "Account lockout threshold",
+      "description": "Xác định số lần đăng nhập không thành công trước khi tài khoản bị khóa.",
+      "category": "Account Policies / Account Lockout Policy", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Account Policies\\Account Lockout Policy",
+      "key_name": "Account lockout threshold", "expected_value": "5 or fewer invalid logon attempt(s), but not 0", "expected_value_raw": 5, "value_type": "NUMBER",
+      "remediation": "Set to 5 or fewer (not 0) via secpol.msc"
+    },
+    {
+      "id": "1.2.3", "name": "Allow Administrator account lockout",
+      "description": "Cho phép khóa tài khoản quản trị viên tích hợp sẵn khi có quá nhiều lần nhập mật khẩu sai.",
+      "category": "Account Policies / Account Lockout Policy", "type": "Manual", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Account Policies\\Account Lockout Policy",
+      "key_name": "Allow Administrator account lockout", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Enable via secpol.msc"
+    },
+    {
+      "id": "1.2.4", "name": "Reset account lockout counter after",
+      "description": "Xác định khoảng thời gian trước khi ngưỡng khóa tài khoản được đặt lại về không.",
+      "category": "Account Policies / Account Lockout Policy", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Account Policies\\Account Lockout Policy",
+      "key_name": "Reset account lockout counter after", "expected_value": "15 or more minute(s)", "expected_value_raw": 15, "value_type": "NUMBER",
+      "remediation": "Set to 15 or more minutes via secpol.msc"
+    },
+    {
+      "id": "2.2.1", "name": "Access Credential Manager as a trusted caller",
+      "description": "Ngăn chặn truy cập trái phép vào trình quản lý thông tin xác thực trong quá trình sao lưu và khôi phục.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Access Credential Manager as a trusted caller", "expected_value": "No One", "expected_value_raw": "", "value_type": "STRING",
+      "remediation": "Set to No One via secpol.msc > User Rights Assignment"
+    },
+    {
+      "id": "2.2.2", "name": "Access this computer from the network",
+      "description": "Cho phép kết nối với máy tính thông qua mạng cho các giao thức mạng yêu cầu.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Access this computer from the network", "expected_value": "Administrators, Remote Desktop Users", "expected_value_raw": "Administrators,Remote Desktop Users", "value_type": "STRING",
+      "remediation": "Set to Administrators, Remote Desktop Users via secpol.msc"
+    },
+    {
+      "id": "2.2.3", "name": "Act as part of the operating system",
+      "description": "Cho phép một quy trình giả mạo danh tính của bất kỳ người dùng nào và truy cập các tài nguyên.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Act as part of the operating system", "expected_value": "No One", "expected_value_raw": "", "value_type": "STRING",
+      "remediation": "Set to No One via secpol.msc"
+    },
+    {
+      "id": "2.2.4", "name": "Adjust memory quotas for a process",
+      "description": "Kiểm soát quyền điều chỉnh dung lượng bộ nhớ tối đa có sẵn cho một tiến trình.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Adjust memory quotas for a process", "expected_value": "Administrators, LOCAL SERVICE, NETWORK SERVICE", "expected_value_raw": "Administrators,LOCAL SERVICE,NETWORK SERVICE", "value_type": "STRING",
+      "remediation": "Set to Administrators, LOCAL SERVICE, NETWORK SERVICE via secpol.msc"
+    },
+    {
+      "id": "2.2.5", "name": "Allow log on locally",
+      "description": "Xác định người dùng nào có thể đăng nhập tương tác trực tiếp vào máy tính.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Allow log on locally", "expected_value": "Administrators, Users", "expected_value_raw": "Administrators,Users", "value_type": "STRING",
+      "remediation": "Set to Administrators, Users via secpol.msc"
+    },
+    {
+      "id": "2.2.6", "name": "Allow log on through Remote Desktop Services",
+      "description": "Xác định người dùng hoặc nhóm nào có quyền đăng nhập thông qua dịch vụ máy tính từ xa.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Allow log on through Remote Desktop Services", "expected_value": "Administrators, Remote Desktop Users", "expected_value_raw": "Administrators,Remote Desktop Users", "value_type": "STRING",
+      "remediation": "Set to Administrators, Remote Desktop Users"
+    },
+    {
+      "id": "2.2.7", "name": "Back up files and directories",
+      "description": "Cho phép người dùng vượt qua quyền đối với tệp và thư mục để sao lưu hệ thống.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Back up files and directories", "expected_value": "Administrators", "expected_value_raw": "Administrators", "value_type": "STRING",
+      "remediation": "Set to Administrators only via secpol.msc"
+    },
+    {
+      "id": "2.2.8", "name": "Change the system time",
+      "description": "Xác định người dùng và nhóm nào có thể thay đổi ngày giờ trên đồng hồ nội bộ của máy tính.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Change the system time", "expected_value": "Administrators, LOCAL SERVICE", "expected_value_raw": "Administrators,LOCAL SERVICE", "value_type": "STRING",
+      "remediation": "Set to Administrators, LOCAL SERVICE via secpol.msc"
+    },
+    {
+      "id": "2.2.9", "name": "Create a pagefile",
+      "description": "Cho phép người dùng thay đổi kích thước của tệp hoán trang.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Create a pagefile", "expected_value": "Administrators", "expected_value_raw": "Administrators", "value_type": "STRING",
+      "remediation": "Set to Administrators only"
+    },
+    {
+      "id": "2.2.10", "name": "Create a token object",
+      "description": "Cho phép một tiến trình tạo mã thông báo truy cập có thể cung cấp đặc quyền trái phép.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Create a token object", "expected_value": "No One", "expected_value_raw": "", "value_type": "STRING",
+      "remediation": "Set to No One via secpol.msc"
+    },
+    {
+      "id": "2.2.11", "name": "Create global objects",
+      "description": "Xác định xem người dùng có thể tạo các đối tượng toàn cục có sẵn cho tất cả các phiên hay không.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Create global objects", "expected_value": "Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE", "expected_value_raw": "Administrators,LOCAL SERVICE,NETWORK SERVICE,SERVICE", "value_type": "STRING",
+      "remediation": "Set to Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE"
+    },
+    {
+      "id": "2.2.12", "name": "Create permanent shared objects",
+      "description": "Ngăn chặn tạo các đối tượng dùng chung vĩnh viễn.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Create permanent shared objects", "expected_value": "No One", "expected_value_raw": "", "value_type": "STRING",
+      "remediation": "Set to No One"
+    },
+    {
+      "id": "2.2.13", "name": "Create symbolic links",
+      "description": "Xác định người dùng nào có thể tạo liên kết tượng trưng trên hệ thống.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Create symbolic links", "expected_value": "Administrators", "expected_value_raw": "Administrators", "value_type": "STRING",
+      "remediation": "Set to Administrators only"
+    },
+    {
+      "id": "2.2.14", "name": "Debug programs",
+      "description": "Xác định tài khoản người dùng nào có quyền đính kèm trình gỡ lỗi vào bất kỳ tiến trình hoặc hạt nhân nào.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Debug programs", "expected_value": "Administrators", "expected_value_raw": "Administrators", "value_type": "STRING",
+      "remediation": "Set to Administrators only"
+    },
+    {
+      "id": "2.2.15", "name": "Deny access to this computer from the network",
+      "description": "Cấm người dùng kết nối với máy tính từ xa qua mạng, ngăn chặn truy cập dữ liệu.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Deny access to this computer from the network", "expected_value": "Guests, Local account", "expected_value_raw": "Guests,Local account", "value_type": "STRING",
+      "remediation": "Include Guests, Local account"
+    },
+    {
+      "id": "2.2.16", "name": "Deny log on as a batch job",
+      "description": "Xác định tài khoản nào sẽ không thể đăng nhập vào máy tính dưới dạng công việc hàng loạt.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Deny log on as a batch job", "expected_value": "Guests", "expected_value_raw": "Guests", "value_type": "STRING",
+      "remediation": "Include Guests"
+    },
+    {
+      "id": "2.2.17", "name": "Deny log on as a service",
+      "description": "Xác định tài khoản dịch vụ nào bị ngăn đăng ký một tiến trình như một dịch vụ.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Deny log on as a service", "expected_value": "Guests", "expected_value_raw": "Guests", "value_type": "STRING",
+      "remediation": "Include Guests"
+    },
+    {
+      "id": "2.2.18", "name": "Deny log on locally",
+      "description": "Xác định người dùng nào bị ngăn đăng nhập trực tiếp tại máy tính.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Deny log on locally", "expected_value": "Guests", "expected_value_raw": "Guests", "value_type": "STRING",
+      "remediation": "Include Guests"
+    },
+    {
+      "id": "2.2.19", "name": "Deny log on through Remote Desktop Services",
+      "description": "Xác định xem người dùng có bị ngăn đăng nhập thông qua dịch vụ kết nối từ xa hay không.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Deny log on through Remote Desktop Services", "expected_value": "Guests, Local account", "expected_value_raw": "Guests,Local account", "value_type": "STRING",
+      "remediation": "Include Guests, Local account"
+    },
+    {
+      "id": "2.2.20", "name": "Enable computer and user accounts to be trusted for delegation",
+      "description": "Cho phép người dùng thay đổi cài đặt tin cậy để ủy quyền trên một đối tượng máy tính.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Enable computer and user accounts to be trusted for delegation", "expected_value": "No One", "expected_value_raw": "", "value_type": "STRING",
+      "remediation": "Set to No One"
+    },
+    {
+      "id": "2.2.21", "name": "Force shutdown from a remote system",
+      "description": "Cho phép tắt máy tính từ các vị trí từ xa trên mạng.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Force shutdown from a remote system", "expected_value": "Administrators", "expected_value_raw": "Administrators", "value_type": "STRING",
+      "remediation": "Set to Administrators only"
+    },
+    {
+      "id": "2.2.22", "name": "Generate security audits",
+      "description": "Xác định người dùng hoặc tiến trình nào có thể tạo hồ sơ kiểm toán trong nhật ký bảo mật.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Generate security audits", "expected_value": "LOCAL SERVICE, NETWORK SERVICE, RESTRICTED SERVICES\\PrintSpoolerService", "expected_value_raw": "LOCAL SERVICE,NETWORK SERVICE,RESTRICTED SERVICES\\PrintSpoolerService", "value_type": "STRING",
+      "remediation": "Set to LOCAL SERVICE, NETWORK SERVICE, RESTRICTED SERVICES\\PrintSpoolerService"
+    },
+    {
+      "id": "2.2.23", "name": "Impersonate a client after authentication",
+      "description": "Cho phép các chương trình mạo danh người dùng để hành động thay mặt người dùng.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Impersonate a client after authentication", "expected_value": "Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE, RESTRICTED SERVICES\\PrintSpoolerService", "expected_value_raw": "Administrators,LOCAL SERVICE,NETWORK SERVICE,SERVICE,RESTRICTED SERVICES\\PrintSpoolerService", "value_type": "STRING",
+      "remediation": "Set correctly via secpol.msc"
+    },
+    {
+      "id": "2.2.24", "name": "Increase scheduling priority",
+      "description": "Xác định xem người dùng có thể tăng lớp ưu tiên cơ sở của một tiến trình hay không.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Increase scheduling priority", "expected_value": "Administrators, Window Manager\\Window Manager Group", "expected_value_raw": "Administrators,Window Manager\\Window Manager Group", "value_type": "STRING",
+      "remediation": "Set to Administrators, Window Manager Group"
+    },
+    {
+      "id": "2.2.25", "name": "Load and unload device drivers",
+      "description": "Cho phép người dùng tải động một trình điều khiển thiết bị mới trên hệ thống.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Load and unload device drivers", "expected_value": "Administrators", "expected_value_raw": "Administrators", "value_type": "STRING",
+      "remediation": "Set to Administrators only"
+    },
+    {
+      "id": "2.2.26", "name": "Lock pages in memory",
+      "description": "Cho phép một tiến trình giữ dữ liệu trong bộ nhớ vật lý, ngăn hệ thống chuyển dữ liệu sang bộ nhớ ảo.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Lock pages in memory", "expected_value": "No One", "expected_value_raw": "", "value_type": "STRING",
+      "remediation": "Set to No One"
+    },
+    {
+      "id": "2.2.29", "name": "Manage auditing and security log",
+      "description": "Xác định người dùng nào có thể thay đổi các tùy chọn kiểm toán và xóa nhật ký bảo mật.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Manage auditing and security log", "expected_value": "Administrators", "expected_value_raw": "Administrators", "value_type": "STRING",
+      "remediation": "Set to Administrators only"
+    },
+    {
+      "id": "2.2.30", "name": "Modify an object label",
+      "description": "Xác định tài khoản người dùng nào có thể sửa đổi nhãn tính toàn vẹn của các đối tượng.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Modify an object label", "expected_value": "No One", "expected_value_raw": "", "value_type": "STRING",
+      "remediation": "Set to No One"
+    },
+    {
+      "id": "2.2.31", "name": "Modify firmware environment values",
+      "description": "Cho phép sửa đổi các biến môi trường phần sụn.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Modify firmware environment values", "expected_value": "Administrators", "expected_value_raw": "Administrators", "value_type": "STRING",
+      "remediation": "Set to Administrators only"
+    },
+    {
+      "id": "2.2.32", "name": "Perform volume maintenance tasks",
+      "description": "Cho phép thực hiện các tác vụ bảo trì phân vùng ổ đĩa.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Perform volume maintenance tasks", "expected_value": "Administrators", "expected_value_raw": "Administrators", "value_type": "STRING",
+      "remediation": "Set to Administrators only"
+    },
+    {
+      "id": "2.2.33", "name": "Profile single process",
+      "description": "Cấp quyền theo dõi hiệu suất của một tiến trình duy nhất.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Profile single process", "expected_value": "Administrators", "expected_value_raw": "Administrators", "value_type": "STRING",
+      "remediation": "Set to Administrators only"
+    },
+    {
+      "id": "2.2.34", "name": "Profile system performance",
+      "description": "Cấp quyền theo dõi hiệu suất toàn bộ hệ thống.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Profile system performance", "expected_value": "Administrators, NT SERVICE\\WdiServiceHost", "expected_value_raw": "Administrators,NT SERVICE\\WdiServiceHost", "value_type": "STRING",
+      "remediation": "Set to Administrators, NT SERVICE\\WdiServiceHost"
+    },
+    {
+      "id": "2.2.35", "name": "Replace a process level token",
+      "description": "Cấp quyền thay thế mã xác thực cấp tiến trình.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Replace a process level token", "expected_value": "LOCAL SERVICE, NETWORK SERVICE", "expected_value_raw": "LOCAL SERVICE,NETWORK SERVICE", "value_type": "STRING",
+      "remediation": "Set to LOCAL SERVICE, NETWORK SERVICE"
+    },
+    {
+      "id": "2.2.36", "name": "Restore files and directories",
+      "description": "Cho phép phục hồi các tệp và thư mục từ bản sao lưu.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Restore files and directories", "expected_value": "Administrators", "expected_value_raw": "Administrators", "value_type": "STRING",
+      "remediation": "Set to Administrators only"
+    },
+    {
+      "id": "2.2.37", "name": "Shut down the system",
+      "description": "Cho phép tắt hệ điều hành.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Shut down the system", "expected_value": "Administrators, Users", "expected_value_raw": "Administrators,Users", "value_type": "STRING",
+      "remediation": "Set to Administrators, Users"
+    },
+    {
+      "id": "2.2.38", "name": "Take ownership of files or other objects",
+      "description": "Cấp quyền chiếm quyền sở hữu tệp hoặc các đối tượng khác.",
+      "category": "Local Policies / User Rights Assignment", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\User Rights Assignment",
+      "key_name": "Take ownership of files or other objects", "expected_value": "Administrators", "expected_value_raw": "Administrators", "value_type": "STRING",
+      "remediation": "Set to Administrators only"
+    },
+    {
+      "id": "2.3.1.1", "name": "Accounts: Guest account status",
+      "description": "Vô hiệu hóa tài khoản khách mặc định để ngăn chặn truy cập ẩn danh.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\Security Options",
+      "key_name": "Accounts: Guest account status", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Disable via secpol.msc > Security Options"
+    },
+    {
+      "id": "2.3.1.2", "name": "Accounts: Limit local account use of blank passwords to console logon only",
+      "description": "Giới hạn tài khoản không có mật khẩu chỉ được đăng nhập trực tiếp.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa",
+      "key_name": "LimitBlankPasswordUse", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set LimitBlankPasswordUse = 1"
+    },
+    {
+      "id": "2.3.1.3", "name": "Accounts: Rename administrator account",
+      "description": "Thay đổi tên tài khoản quản trị viên mặc định để tránh các cuộc tấn công dò đoán.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\Security Options",
+      "key_name": "Accounts: Rename administrator account", "expected_value": "<custom name - not 'Administrator'>", "expected_value_raw": "", "value_type": "STRING",
+      "remediation": "Rename from 'Administrator' to a custom name via secpol.msc"
+    },
+    {
+      "id": "2.3.1.4", "name": "Accounts: Rename guest account",
+      "description": "Thay đổi tên tài khoản khách mặc định để tăng tính bảo mật.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\Security Options",
+      "key_name": "Accounts: Rename guest account", "expected_value": "<custom name - not 'Guest'>", "expected_value_raw": "", "value_type": "STRING",
+      "remediation": "Rename from 'Guest' to a custom name"
+    },
+    {
+      "id": "2.3.2.1", "name": "Audit: Force audit policy subcategory settings",
+      "description": "Buộc sử dụng chính sách kiểm toán chi tiết thay vì danh mục cũ.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa",
+      "key_name": "SCENoApplyLegacyAuditPolicy", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set SCENoApplyLegacyAuditPolicy = 1"
+    },
+    {
+      "id": "2.3.2.2", "name": "Audit: Shut down system immediately if unable to log security audits",
+      "description": "Không tắt hệ thống ngay lập tức khi không thể ghi nhật ký bảo mật.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa",
+      "key_name": "CrashOnAuditFail", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set CrashOnAuditFail = 0"
+    },
+    {
+      "id": "2.3.4.1", "name": "Devices: Prevent users from installing printer drivers",
+      "description": "Ngăn chặn người dùng tự ý cài đặt trình điều khiển máy in.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Print\\Providers\\LanMan Print Services\\Servers",
+      "key_name": "AddPrinterDrivers", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set AddPrinterDrivers = 1"
+    },
+    {
+      "id": "2.3.6.1", "name": "Domain member: Digitally encrypt or sign secure channel data (always)",
+      "description": "Yêu cầu mã hóa hoặc ký kỹ thuật số toàn bộ dữ liệu trên kênh bảo mật mọi lúc.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\Netlogon\\Parameters",
+      "key_name": "RequireSignOrSeal", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set RequireSignOrSeal = 1"
+    },
+    {
+      "id": "2.3.6.2", "name": "Domain member: Digitally encrypt secure channel data (when possible)",
+      "description": "Mã hóa dữ liệu trên kênh bảo mật khi có khả năng.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\Netlogon\\Parameters",
+      "key_name": "SealSecureChannel", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set SealSecureChannel = 1"
+    },
+    {
+      "id": "2.3.6.3", "name": "Domain member: Digitally sign secure channel data (when possible)",
+      "description": "Ký kỹ thuật số dữ liệu kênh bảo mật khi có khả năng.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\Netlogon\\Parameters",
+      "key_name": "SignSecureChannel", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set SignSecureChannel = 1"
+    },
+    {
+      "id": "2.3.6.4", "name": "Domain member: Disable machine account password changes",
+      "description": "Cho phép máy tính thay đổi mật khẩu tài khoản máy định kỳ.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\Netlogon\\Parameters",
+      "key_name": "DisablePasswordChange", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set DisablePasswordChange = 0"
+    },
+    {
+      "id": "2.3.6.5", "name": "Domain member: Maximum machine account password age",
+      "description": "Giới hạn độ tuổi tối đa của mật khẩu tài khoản máy tính.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\Netlogon\\Parameters",
+      "key_name": "MaximumPasswordAge", "expected_value": "30 or fewer days, but not 0", "expected_value_raw": 30, "value_type": "DWORD",
+      "remediation": "Set MaximumPasswordAge = 30 or fewer"
+    },
+    {
+      "id": "2.3.6.6", "name": "Domain member: Require strong session key",
+      "description": "Yêu cầu khóa phiên mạnh cho kết nối mạng.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\Netlogon\\Parameters",
+      "key_name": "RequireStrongKey", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set RequireStrongKey = 1"
+    },
+    {
+      "id": "2.3.7.1", "name": "Interactive logon: Do not require CTRL+ALT+DEL",
+      "description": "Yêu cầu tổ hợp phím trước khi đăng nhập để tăng bảo mật.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon",
+      "key_name": "DisableCAD", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set DisableCAD = 0"
+    },
+    {
+      "id": "2.3.7.2", "name": "Interactive logon: Don't display last signed-in",
+      "description": "Ẩn thông tin về người dùng đăng nhập gần nhất.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon",
+      "key_name": "DontDisplayLastUserName", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set DontDisplayLastUserName = 1"
+    },
+    {
+      "id": "2.3.7.3", "name": "Interactive logon: Machine inactivity limit",
+      "description": "Khóa máy tính sau một thời gian không hoạt động.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon",
+      "key_name": "InactivityTimeoutSecs", "expected_value": "900 or fewer second(s), but not 0", "expected_value_raw": 900, "value_type": "DWORD",
+      "remediation": "Set InactivityTimeoutSecs = 900 or fewer"
+    },
+    {
+      "id": "2.3.7.4", "name": "Interactive logon: Message text for users attempting to log on",
+      "description": "Cấu hình nội dung thông báo hiển thị khi người dùng đăng nhập.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon",
+      "key_name": "LegalNoticeText", "expected_value": "<non-empty custom message>", "expected_value_raw": "", "value_type": "STRING",
+      "remediation": "Set LegalNoticeText to a non-empty warning message via secpol.msc"
+    },
+    {
+      "id": "2.3.7.5", "name": "Interactive logon: Message title for users attempting to log on",
+      "description": "Cấu hình tiêu đề thông báo hiển thị khi người dùng đăng nhập.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon",
+      "key_name": "LegalNoticeCaption", "expected_value": "<non-empty custom title>", "expected_value_raw": "", "value_type": "STRING",
+      "remediation": "Set LegalNoticeCaption to a non-empty title via secpol.msc"
+    },
+    {
+      "id": "2.3.7.6", "name": "Interactive logon: Number of previous logons to cache",
+      "description": "Giới hạn số lượng lần đăng nhập trước đó được lưu trữ cục bộ.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon",
+      "key_name": "CachedLogonsCount", "expected_value": "4 or fewer logon(s)", "expected_value_raw": 4, "value_type": "STRING",
+      "remediation": "Set CachedLogonsCount = 4 or fewer via secpol.msc"
+    },
+    {
+      "id": "2.3.7.7", "name": "Interactive logon: Prompt user to change password before expiration",
+      "description": "Thời gian nhắc nhở người dùng thay đổi mật khẩu trước khi hết hạn.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon",
+      "key_name": "PasswordExpiryWarning", "expected_value": "between 5 and 14 days", "expected_value_raw": 14, "value_type": "DWORD",
+      "remediation": "Set PasswordExpiryWarning between 5-14"
+    },
+    {
+      "id": "2.3.7.8", "name": "Interactive logon: Smart card removal behavior",
+      "description": "Hành vi hệ thống khi tháo thẻ thông minh.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon",
+      "key_name": "ScRemoveOption", "expected_value": "Lock Workstation or higher", "expected_value_raw": "1", "value_type": "STRING",
+      "remediation": "Set ScRemoveOption = 1 (Lock Workstation)"
+    },
+    {
+      "id": "2.3.8.1", "name": "Microsoft network client: Digitally sign communications (always)",
+      "description": "Yêu cầu máy khách mạng luôn ký kỹ thuật số thông tin liên lạc.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\LanmanWorkstation\\Parameters",
+      "key_name": "RequireSecuritySignature", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set RequireSecuritySignature = 1"
+    },
+    {
+      "id": "2.3.8.2", "name": "Microsoft network client: Send unencrypted password to third-party SMB servers",
+      "description": "Ngăn chặn gửi mật khẩu không mã hóa đến các máy chủ bên thứ ba.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\LanmanWorkstation\\Parameters",
+      "key_name": "EnablePlainTextPassword", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set EnablePlainTextPassword = 0"
+    },
+    {
+      "id": "2.3.9.1", "name": "Microsoft network server: Amount of idle time required before suspending session",
+      "description": "Xác định thời gian nhàn rỗi trước khi phiên làm việc bị tạm dừng.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters",
+      "key_name": "AutoDisconnect", "expected_value": "15 or fewer minute(s)", "expected_value_raw": 15, "value_type": "DWORD",
+      "remediation": "Set AutoDisconnect = 15 or fewer"
+    },
+    {
+      "id": "2.3.9.2", "name": "Microsoft network server: Digitally sign communications (always)",
+      "description": "Yêu cầu máy chủ mạng luôn ký kỹ thuật số thông tin liên lạc.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters",
+      "key_name": "RequireSecuritySignature", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set RequireSecuritySignature = 1"
+    },
+    {
+      "id": "2.3.9.3", "name": "Microsoft network server: Disconnect clients when logon hours expire",
+      "description": "Ngắt kết nối máy khách khi hết giờ làm việc được phép.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters",
+      "key_name": "EnableForcedLogOff", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set EnableForcedLogOff = 1"
+    },
+    {
+      "id": "2.3.9.4", "name": "Microsoft network server: Server SPN target name validation level",
+      "description": "Mức độ xác thực tên mục tiêu dịch vụ máy chủ.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters",
+      "key_name": "SmbServerNameHardeningLevel", "expected_value": "Accept if provided by client or higher", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set SmbServerNameHardeningLevel = 1 or higher"
+    },
+    {
+      "id": "2.3.10.1", "name": "Network access: Allow anonymous SID/Name translation",
+      "description": "Ngăn chặn người dùng ẩn danh phân giải tên thành mã bảo mật.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\Security Options",
+      "key_name": "Network access: Allow anonymous SID/Name translation", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Disable via secpol.msc"
+    },
+    {
+      "id": "2.3.10.2", "name": "Network access: Do not allow anonymous enumeration of SAM accounts",
+      "description": "Ngăn chặn liệt kê danh sách tài khoản trong cơ sở dữ liệu bảo mật ẩn danh.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa",
+      "key_name": "RestrictAnonymousSAM", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set RestrictAnonymousSAM = 1"
+    },
+    {
+      "id": "2.3.10.3", "name": "Network access: Do not allow anonymous enumeration of SAM accounts and shares",
+      "description": "Ngăn chặn liệt kê danh sách tài khoản và các thư mục chia sẻ ẩn danh.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa",
+      "key_name": "RestrictAnonymous", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set RestrictAnonymous = 1"
+    },
+    {
+      "id": "2.3.10.4", "name": "Network access: Do not allow storage of passwords and credentials for network authentication",
+      "description": "Ngăn chặn lưu trữ mật khẩu và thông tin xác thực để sử dụng sau.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa",
+      "key_name": "DisableDomainCreds", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set DisableDomainCreds = 1"
+    },
+    {
+      "id": "2.3.10.5", "name": "Network access: Let Everyone permissions apply to anonymous users",
+      "description": "Không cấp quyền của nhóm Tất cả cho các kết nối ẩn danh.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa",
+      "key_name": "EveryoneIncludesAnonymous", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set EveryoneIncludesAnonymous = 0"
+    },
+    {
+      "id": "2.3.10.6", "name": "Network access: Named Pipes that can be accessed anonymously",
+      "description": "Hạn chế danh sách các đường ống có thể được truy cập ẩn danh.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters",
+      "key_name": "NullSessionPipes", "expected_value": "None", "expected_value_raw": "", "value_type": "MULTI_SZ",
+      "remediation": "Set NullSessionPipes to empty value via secpol.msc"
+    },
+    {
+      "id": "2.3.10.7", "name": "Network access: Remotely accessible registry paths",
+      "description": "Giới hạn các đường dẫn tệp tin đăng ký hệ thống có thể truy cập từ xa.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\SecurePipeServers\\winreg\\AllowedExactPaths",
+      "key_name": "Machine", "expected_value": "System\\CurrentControlSet\\Control\\ProductOptions, System\\CurrentControlSet\\Control\\Server Applications, Software\\Microsoft\\Windows NT\\CurrentVersion", "expected_value_raw": "System\\CurrentControlSet\\Control\\ProductOptions\r\nSystem\\CurrentControlSet\\Control\\Server Applications\r\nSoftware\\Microsoft\\Windows NT\\CurrentVersion", "value_type": "MULTI_SZ",
+      "remediation": "Configure via secpol.msc > Security Options > Network access: Remotely accessible registry paths"
+    },
+    {
+      "id": "2.3.10.8", "name": "Network access: Remotely accessible registry paths and sub-paths",
+      "description": "Giới hạn đường dẫn phụ tệp tin đăng ký hệ thống truy cập từ xa.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\SecurePipeServers\\winreg\\AllowedPaths",
+      "key_name": "Machine", "expected_value": "Defined approved sub-paths only", "expected_value_raw": "System\\CurrentControlSet\\Control\\Print\\Printers\r\nSystem\\CurrentControlSet\\Services\\Eventlog\r\nSoftware\\Microsoft\\OLAP Server\r\nSoftware\\Microsoft\\Windows NT\\CurrentVersion\\Print\r\nSoftware\\Microsoft\\Windows NT\\CurrentVersion\\Windows\r\nSystem\\CurrentControlSet\\Control\\ContentIndex\r\nSystem\\CurrentControlSet\\Control\\Terminal Server\r\nSystem\\CurrentControlSet\\Control\\Terminal Server\\UserConfig\r\nSystem\\CurrentControlSet\\Control\\Terminal Server\\DefaultUserConfiguration\r\nSoftware\\Microsoft\\Windows NT\\CurrentVersion\\Perflib\r\nSystem\\CurrentControlSet\\Services\\SysmonLog", "value_type": "MULTI_SZ",
+      "remediation": "Configure via secpol.msc > Security Options > Network access: Remotely accessible registry paths and sub-paths"
+    },
+    {
+      "id": "2.3.10.9", "name": "Network access: Restrict anonymous access to Named Pipes and Shares",
+      "description": "Hạn chế quyền truy cập ẩn danh vào các đường ống và tài nguyên chia sẻ.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters",
+      "key_name": "RestrictNullSessAccess", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set RestrictNullSessAccess = 1"
+    },
+    {
+      "id": "2.3.10.10", "name": "Network access: Restrict clients allowed to make remote calls to SAM",
+      "description": "Giới hạn các máy khách được phép thực hiện lệnh gọi từ xa đến cơ sở dữ liệu bảo mật.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa",
+      "key_name": "RestrictRemoteSAM", "expected_value": "O:BAG:BAD:(A;;RC;;;BA)", "expected_value_raw": "O:BAG:BAD:(A;;RC;;;BA)", "value_type": "STRING",
+      "remediation": "Set RestrictRemoteSAM = O:BAG:BAD:(A;;RC;;;BA) — Administrators: Remote Access: Allow"
+    },
+    {
+      "id": "2.3.10.11", "name": "Network access: Shares that can be accessed anonymously",
+      "description": "Giới hạn các tài nguyên chia sẻ có thể được truy cập ẩn danh.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters",
+      "key_name": "NullSessionShares", "expected_value": "None", "expected_value_raw": "", "value_type": "MULTI_SZ",
+      "remediation": "Set NullSessionShares to empty via secpol.msc"
+    },
+    {
+      "id": "2.3.10.12", "name": "Network access: Sharing and security model for local accounts",
+      "description": "Thiết lập mô hình chia sẻ và bảo mật cho các tài khoản cục bộ.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa",
+      "key_name": "ForceGuest", "expected_value": "Classic - local users authenticate as themselves", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set ForceGuest = 0 (Classic mode)"
+    },
+    {
+      "id": "2.3.11.1", "name": "Network security: Allow Local System to use computer identity for NTLM",
+      "description": "Cho phép hệ thống cục bộ sử dụng danh tính máy tính để xác thực.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\MSV1_0",
+      "key_name": "UseMachineId", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set UseMachineId = 1 via secpol.msc > Security Options"
+    },
+    {
+      "id": "2.3.11.2", "name": "Network security: Allow LocalSystem NULL session fallback",
+      "description": "Vô hiệu hóa việc dự phòng phiên trống của hệ thống cục bộ.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\MSV1_0",
+      "key_name": "allownullsessionfallback", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set allownullsessionfallback = 0"
+    },
+    {
+      "id": "2.3.11.3", "name": "Network Security: Allow PKU2U authentication requests to this computer to use online identities",
+      "description": "Vô hiệu hóa sử dụng danh tính trực tuyến cho các yêu cầu xác thực ngang hàng.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\pku2u",
+      "key_name": "AllowOnlineID", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set AllowOnlineID = 0"
+    },
+    {
+      "id": "2.3.11.4", "name": "Network security: Configure encryption types allowed for Kerberos",
+      "description": "Cấu hình loại mã hóa được phép cho giao thức xác thực Kerberos.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\Kerberos\\Parameters",
+      "key_name": "SupportedEncryptionTypes", "expected_value": "AES128_HMAC_SHA1, AES256_HMAC_SHA1, Future encryption types", "expected_value_raw": 2147483640, "value_type": "DWORD",
+      "remediation": "Set SupportedEncryptionTypes = 2147483640"
+    },
+    {
+      "id": "2.3.11.5", "name": "Network security: Force logoff when logon hours expire",
+      "description": "Bắt buộc tự động đăng xuất người dùng khi hết thời gian đăng nhập được hệ thống cho phép.",
+      "category": "Local Policies / Security Options", "type": "Manual", "intervention_type": "Secpol",
+      "path": "Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\Security Options",
+      "key_name": "Network security: Force logoff when logon hours expire", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Enable via secpol.msc"
+    },
+    {
+      "id": "2.3.11.6", "name": "Network security: LAN Manager authentication level",
+      "description": "Xác định mức độ xác thực cho hệ thống mạng cục bộ.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa",
+      "key_name": "LmCompatibilityLevel", "expected_value": "Send NTLMv2 response only. Refuse LM & NTLM", "expected_value_raw": 5, "value_type": "DWORD",
+      "remediation": "Set LmCompatibilityLevel = 5"
+    },
+    {
+      "id": "2.3.11.7", "name": "Network security: LDAP client encryption requirements",
+      "description": "Yêu cầu mã hóa máy khách đối với giao thức truy cập thư mục hạng nhẹ.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\LDAP",
+      "key_name": "LDAPClientIntegrity", "expected_value": "Negotiate sealing or higher", "expected_value_raw": 2, "value_type": "DWORD",
+      "remediation": "Set LDAPClientIntegrity = 2"
+    },
+    {
+      "id": "2.3.11.8", "name": "Network security: LDAP client signing requirements",
+      "description": "Yêu cầu ký chữ ký số đối với giao thức truy cập thư mục hạng nhẹ.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\LDAP",
+      "key_name": "LDAPClientIntegrity", "expected_value": "Negotiate signing or higher", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set LDAPClientIntegrity >= 1"
+    },
+    {
+      "id": "2.3.11.9", "name": "Network security: Minimum session security for NTLM SSP based clients",
+      "description": "Bảo mật phiên tối thiểu cho các máy khách kết nối.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\MSV1_0",
+      "key_name": "NTLMMinClientSec", "expected_value": "Require NTLMv2 session security, Require 128-bit encryption", "expected_value_raw": 537395200, "value_type": "DWORD",
+      "remediation": "Set NTLMMinClientSec = 537395200"
+    },
+    {
+      "id": "2.3.11.10", "name": "Network security: Minimum session security for NTLM SSP based servers",
+      "description": "Bảo mật phiên tối thiểu cho các máy chủ kết nối.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\MSV1_0",
+      "key_name": "NTLMMinServerSec", "expected_value": "Require NTLMv2 session security, Require 128-bit encryption", "expected_value_raw": 537395200, "value_type": "DWORD",
+      "remediation": "Set NTLMMinServerSec = 537395200"
+    },
+    {
+      "id": "2.3.11.11", "name": "Network security: Restrict NTLM: Audit Incoming NTLM Traffic",
+      "description": "Kiểm toán tất cả các yêu cầu lưu lượng xác thực đến.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\MSV1_0",
+      "key_name": "AuditReceivingNTLMTraffic", "expected_value": "Enable auditing for all accounts", "expected_value_raw": 2, "value_type": "DWORD",
+      "remediation": "Set AuditReceivingNTLMTraffic = 2"
+    },
+    {
+      "id": "2.3.11.12", "name": "Network security: Restrict NTLM: Outgoing NTLM traffic to remote servers",
+      "description": "Kiểm toán tất cả các yêu cầu lưu lượng xác thực gửi đi máy chủ từ xa.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\MSV1_0",
+      "key_name": "RestrictSendingNTLMTraffic", "expected_value": "Audit all or higher", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set RestrictSendingNTLMTraffic = 1 (Audit all) or 2 (Deny all)"
+    },
+    {
+      "id": "2.3.15.1", "name": "System objects: Require case insensitivity for non-Windows subsystems",
+      "description": "Bắt buộc tính năng không phân biệt chữ hoa chữ thường đối với các hệ thống con ngoại lai.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Kernel",
+      "key_name": "ObCaseInsensitive", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set ObCaseInsensitive = 1"
+    },
+    {
+      "id": "2.3.15.2", "name": "System objects: Strengthen default permissions of internal system objects",
+      "description": "Tăng cường các quyền mặc định của các đối tượng hệ thống nội bộ.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager",
+      "key_name": "ProtectionMode", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set ProtectionMode = 1"
+    },
+    {
+      "id": "2.3.17.1", "name": "User Account Control: Admin Approval Mode for the Built-in Administrator account",
+      "description": "Kích hoạt chế độ phê duyệt quản trị cho tài khoản quản trị viên mặc định.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+      "key_name": "FilterAdministratorToken", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set FilterAdministratorToken = 1"
+    },
+    {
+      "id": "2.3.17.2", "name": "User Account Control: Behavior of the elevation prompt for administrators in Admin Approval Mode",
+      "description": "Định cấu hình hành vi của lời nhắc cấp quyền cho quản trị viên.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+      "key_name": "ConsentPromptBehaviorAdmin", "expected_value": "Prompt for consent on the secure desktop or higher", "expected_value_raw": 2, "value_type": "DWORD",
+      "remediation": "Set ConsentPromptBehaviorAdmin = 2"
+    },
+    {
+      "id": "2.3.17.3", "name": "User Account Control: Behavior of the elevation prompt for standard users",
+      "description": "Tự động từ chối yêu cầu cấp quyền từ các tài khoản người dùng tiêu chuẩn.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+      "key_name": "ConsentPromptBehaviorUser", "expected_value": "Automatically deny elevation requests", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set ConsentPromptBehaviorUser = 0"
+    },
+    {
+      "id": "2.3.17.4", "name": "User Account Control: Detect application installations and prompt for elevation",
+      "description": "Phát hiện khi tiến hành cài đặt ứng dụng để đưa ra lời nhắc cấp quyền.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+      "key_name": "EnableInstallerDetection", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set EnableInstallerDetection = 1"
+    },
+    {
+      "id": "2.3.17.5", "name": "User Account Control: Only elevate UIAccess applications that are installed in secure locations",
+      "description": "Chỉ tự động nâng cấp các ứng dụng được cài đặt ở các vị trí an toàn.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+      "key_name": "EnableSecureUIAPaths", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set EnableSecureUIAPaths = 1"
+    },
+    {
+      "id": "2.3.17.6", "name": "User Account Control: Run all administrators in Admin Approval Mode",
+      "description": "Bắt buộc chạy tất cả các quản trị viên trong chế độ phê duyệt quản trị.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+      "key_name": "EnableLUA", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set EnableLUA = 1"
+    },
+    {
+      "id": "2.3.17.7", "name": "User Account Control: Switch to the secure desktop when prompting for elevation",
+      "description": "Chuyển sang sử dụng màn hình nền bảo mật khi xuất hiện lời nhắc cấp quyền.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+      "key_name": "PromptOnSecureDesktop", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set PromptOnSecureDesktop = 1"
+    },
+    {
+      "id": "2.3.17.8", "name": "User Account Control: Virtualize file and registry write failures to per-user locations",
+      "description": "Ảo hóa các lỗi ghi tệp và cơ sở dữ liệu đăng ký vào thư mục riêng của từng người dùng.",
+      "category": "Local Policies / Security Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+      "key_name": "EnableVirtualization", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set EnableVirtualization = 1"
+    },
+    {
+      "id": "5.3", "name": "Computer Browser (Browser) service",
+      "description": "Duy trì danh sách cập nhật các máy tính trên mạng nội bộ. Dịch vụ cũ, tạo lưu lượng mạng không cần thiết.",
+      "category": "System Services", "type": "Manual", "intervention_type": "Service",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\Browser",
+      "key_name": "Start", "expected_value": "Disabled or Not Installed", "expected_value_raw": 4, "value_type": "DWORD",
+      "remediation": "Set service Startup Type to Disabled via services.msc"
+    },
+    {
+      "id": "5.7", "name": "IIS Admin Service (IISADMIN)",
+      "description": "Cho phép máy chủ quản lý IIS metabase. Lưu trữ trang web trên máy trạm làm tăng bề mặt tấn công.",
+      "category": "System Services", "type": "Manual", "intervention_type": "Service",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\IISADMIN",
+      "key_name": "Start", "expected_value": "Disabled or Not Installed", "expected_value_raw": 4, "value_type": "DWORD",
+      "remediation": "Set service Startup Type to Disabled via services.msc"
+    },
+    {
+      "id": "5.8", "name": "Infrared monitor service (irmon)",
+      "description": "Tự động phát hiện các thiết bị hồng ngoại. Kết nối hồng ngoại tiềm ẩn nguy cơ rò rỉ dữ liệu cao.",
+      "category": "System Services", "type": "Manual", "intervention_type": "Service",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\irmon",
+      "key_name": "Start", "expected_value": "Disabled or Not Installed", "expected_value_raw": 4, "value_type": "DWORD",
+      "remediation": "Set service Startup Type to Disabled via services.msc"
+    },
+    {
+      "id": "5.10", "name": "Microsoft FTP Service (FTPSVC)",
+      "description": "Cho phép máy tính hoạt động như một máy chủ FTP. Chạy FTP server trên thiết bị người dùng mở rộng bề mặt tấn công.",
+      "category": "System Services", "type": "Manual", "intervention_type": "Service",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\FTPSVC",
+      "key_name": "Start", "expected_value": "Disabled or Not Installed", "expected_value_raw": 4, "value_type": "DWORD",
+      "remediation": "Set service Startup Type to Disabled via services.msc"
+    },
+    {
+      "id": "5.12", "name": "OpenSSH SSH Server (sshd)",
+      "description": "Cung cấp dịch vụ giao thức kết nối từ xa SSH. Cho phép máy trạm đóng vai máy chủ SSH tăng bề mặt tấn công.",
+      "category": "System Services", "type": "Manual", "intervention_type": "Service",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\sshd",
+      "key_name": "Start", "expected_value": "Disabled or Not Installed", "expected_value_raw": 4, "value_type": "DWORD",
+      "remediation": "Set service Startup Type to Disabled via services.msc"
+    },
+    {
+      "id": "5.23", "name": "Remote Procedure Call (RPC) Locator (RpcLocator)",
+      "description": "Dịch vụ cũ quản lý cơ sở dữ liệu RPC từ thời Windows 2003. Không cần thiết trên Windows 11.",
+      "category": "System Services", "type": "Manual", "intervention_type": "Service",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\RpcLocator",
+      "key_name": "Start", "expected_value": "Disabled", "expected_value_raw": 4, "value_type": "DWORD",
+      "remediation": "Set service Startup Type to Disabled via services.msc"
+    },
+    {
+      "id": "5.25", "name": "Routing and Remote Access (RemoteAccess)",
+      "description": "Cung cấp chức năng bộ định tuyến cho máy tính. Gây rủi ro rò rỉ mạng đối với máy trạm doanh nghiệp.",
+      "category": "System Services", "type": "Manual", "intervention_type": "Service",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\RemoteAccess",
+      "key_name": "Start", "expected_value": "Disabled", "expected_value_raw": 4, "value_type": "DWORD",
+      "remediation": "Set service Startup Type to Disabled via services.msc"
+    },
+    {
+      "id": "5.27", "name": "Simple TCP/IP Services (simptcp)",
+      "description": "Cung cấp các dịch vụ mạng cũ (Echo, Daytime...). Không có giá trị thực tế và làm tăng nguy cơ bị tấn công.",
+      "category": "System Services", "type": "Manual", "intervention_type": "Service",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\simptcp",
+      "key_name": "Start", "expected_value": "Disabled or Not Installed", "expected_value_raw": 4, "value_type": "DWORD",
+      "remediation": "Set service Startup Type to Disabled via services.msc"
+    },
+    {
+      "id": "5.29", "name": "Special Administration Console Helper (sacsvr)",
+      "description": "Cho phép truy cập CMD từ xa qua Dịch vụ Quản lý Khẩn cấp. Gây rủi ro bảo mật nghiêm trọng nếu bị khai thác.",
+      "category": "System Services", "type": "Manual", "intervention_type": "Service",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\sacsvr",
+      "key_name": "Start", "expected_value": "Disabled or Not Installed", "expected_value_raw": 4, "value_type": "DWORD",
+      "remediation": "Set service Startup Type to Disabled via services.msc"
+    },
+    {
+      "id": "5.30", "name": "SSDP Discovery (SSDPSRV)",
+      "description": "Tự động khám phá các thiết bị UPnP trên mạng. Giao thức UPnP kém an toàn.",
+      "category": "System Services", "type": "Manual", "intervention_type": "Service",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\SSDPSRV",
+      "key_name": "Start", "expected_value": "Disabled", "expected_value_raw": 4, "value_type": "DWORD",
+      "remediation": "Set service Startup Type to Disabled via services.msc"
+    },
+    {
+      "id": "5.31", "name": "UPnP Device Host (upnphost)",
+      "description": "Cho phép máy tính lưu trữ thiết bị UPnP. Mở ra nhiều lỗ hổng cho mạng doanh nghiệp.",
+      "category": "System Services", "type": "Manual", "intervention_type": "Service",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\upnphost",
+      "key_name": "Start", "expected_value": "Disabled", "expected_value_raw": 4, "value_type": "DWORD",
+      "remediation": "Set service Startup Type to Disabled via services.msc"
+    },
+    {
+      "id": "5.32", "name": "Web Management Service (WMSvc)",
+      "description": "Cho phép quản trị từ xa máy chủ web IIS. Mở rộng bề mặt tấn công không cần thiết.",
+      "category": "System Services", "type": "Manual", "intervention_type": "Service",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\WMSvc",
+      "key_name": "Start", "expected_value": "Disabled or Not Installed", "expected_value_raw": 4, "value_type": "DWORD",
+      "remediation": "Set service Startup Type to Disabled via services.msc"
+    },
+    {
+      "id": "5.35", "name": "Windows Media Player Network Sharing Service (WMPNetworkSvc)",
+      "description": "Chia sẻ thư viện nhạc/video qua mạng nội bộ. Không phục vụ mục đích công việc doanh nghiệp.",
+      "category": "System Services", "type": "Manual", "intervention_type": "Service",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\WMPNetworkSvc",
+      "key_name": "Start", "expected_value": "Disabled or Not Installed", "expected_value_raw": 4, "value_type": "DWORD",
+      "remediation": "Set service Startup Type to Disabled via services.msc"
+    },
+    {
+      "id": "5.36", "name": "Windows Mobile Hotspot Service (icssvc)",
+      "description": "Tính năng phát trạm phát sóng di động (Hotspot). Dễ làm lộ mạng nội bộ ra bên ngoài.",
+      "category": "System Services", "type": "Manual", "intervention_type": "Service",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\icssvc",
+      "key_name": "Start", "expected_value": "Disabled", "expected_value_raw": 4, "value_type": "DWORD",
+      "remediation": "Set service Startup Type to Disabled via services.msc"
+    },
+    {
+      "id": "5.40", "name": "World Wide Web Publishing Service (W3SVC)",
+      "description": "Cung cấp nền tảng chạy trang web IIS. Biến máy trạm thành web server tiềm ẩn nguy cơ cao.",
+      "category": "System Services", "type": "Manual", "intervention_type": "Service",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\W3SVC",
+      "key_name": "Start", "expected_value": "Disabled or Not Installed", "expected_value_raw": 4, "value_type": "DWORD",
+      "remediation": "Set service Startup Type to Disabled via services.msc"
+    },
+    {
+      "id": "5.41", "name": "Xbox Accessory Management Service (XboxGipSvc)",
+      "description": "Quản lý các thiết bị phụ kiện Xbox. Các dịch vụ chơi game không phù hợp trong môi trường doanh nghiệp.",
+      "category": "System Services", "type": "Automated", "intervention_type": "Service",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\XboxGipSvc",
+      "key_name": "Start", "expected_value": "Disabled", "expected_value_raw": 4, "value_type": "DWORD",
+      "remediation": "Set service Startup Type to Disabled via services.msc"
+    },
+    {
+      "id": "5.42", "name": "Xbox Live Auth Manager (XblAuthManager)",
+      "description": "Cung cấp dịch vụ xác thực cho Xbox Live. Không phù hợp trong môi trường mạng làm việc.",
+      "category": "System Services", "type": "Automated", "intervention_type": "Service",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\XblAuthManager",
+      "key_name": "Start", "expected_value": "Disabled", "expected_value_raw": 4, "value_type": "DWORD",
+      "remediation": "Set service Startup Type to Disabled via services.msc"
+    },
+    {
+      "id": "5.43", "name": "Xbox Live Game Save (XblGameSave)",
+      "description": "Đồng bộ dữ liệu trò chơi Xbox Live. Không phục vụ công việc và cần vô hiệu hóa.",
+      "category": "System Services", "type": "Automated", "intervention_type": "Service",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\XblGameSave",
+      "key_name": "Start", "expected_value": "Disabled", "expected_value_raw": 4, "value_type": "DWORD",
+      "remediation": "Set service Startup Type to Disabled via services.msc"
+    },
+    {
+      "id": "5.44", "name": "Xbox Live Networking Service (XboxNetApiSvc)",
+      "description": "Hỗ trợ API mạng cho ứng dụng Xbox Live. Gây rủi ro mạng không cần thiết trong doanh nghiệp.",
+      "category": "System Services", "type": "Automated", "intervention_type": "Service",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\XboxNetApiSvc",
+      "key_name": "Start", "expected_value": "Disabled", "expected_value_raw": 4, "value_type": "DWORD",
+      "remediation": "Set service Startup Type to Disabled via services.msc"
+    },
+    {
+      "id": "9.1.1", "name": "Windows Firewall: Domain: Firewall state",
+      "description": "Đảm bảo tường lửa (Domain Profile) luôn được Bật.",
+      "category": "Windows Defender Firewall / Domain Profile", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\DomainProfile",
+      "key_name": "EnableFirewall", "expected_value": "On (recommended)", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set EnableFirewall = 1"
+    },
+    {
+      "id": "9.1.2", "name": "Windows Firewall: Domain: Inbound connections",
+      "description": "Chặn toàn bộ các kết nối từ bên ngoài nếu không khớp với bất kỳ luật cho phép nào.",
+      "category": "Windows Defender Firewall / Domain Profile", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\DomainProfile",
+      "key_name": "DefaultInboundAction", "expected_value": "Block (default)", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set DefaultInboundAction = 1"
+    },
+    {
+      "id": "9.1.3", "name": "Windows Firewall: Domain: Settings: Display a notification",
+      "description": "Vô hiệu hóa thông báo tường lửa gửi đến người dùng cuối khi một chương trình bị chặn.",
+      "category": "Windows Defender Firewall / Domain Profile", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\DomainProfile",
+      "key_name": "DisableNotifications", "expected_value": "No", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set DisableNotifications = 1"
+    },
+    {
+      "id": "9.1.4", "name": "Windows Firewall: Domain: Logging: Name",
+      "description": "Cấu hình đường dẫn và tên file nhật ký tường lửa.",
+      "category": "Windows Defender Firewall / Domain Profile", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\DomainProfile\\Logging",
+      "key_name": "LogFilePath", "expected_value": "%SystemRoot%\\System32\\logfiles\\firewall\\domainfw.log", "expected_value_raw": "%SystemRoot%\\System32\\logfiles\\firewall\\domainfw.log", "value_type": "STRING",
+      "remediation": "Configure log file path"
+    },
+    {
+      "id": "9.1.5", "name": "Windows Firewall: Domain: Logging: Size limit (KB)",
+      "description": "Đảm bảo dung lượng file log tối thiểu đạt 16MB.",
+      "category": "Windows Defender Firewall / Domain Profile", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\DomainProfile\\Logging",
+      "key_name": "LogFileSize", "expected_value": "16384 KB or greater", "expected_value_raw": 16384, "value_type": "DWORD",
+      "remediation": "Set LogFileSize = 16384 or greater"
+    },
+    {
+      "id": "9.1.6", "name": "Windows Firewall: Domain: Logging: Log dropped packets",
+      "description": "Ghi log toàn bộ các gói tin bị tường lửa chặn (DROP).",
+      "category": "Windows Defender Firewall / Domain Profile", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\DomainProfile\\Logging",
+      "key_name": "LogDroppedPackets", "expected_value": "Yes", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set LogDroppedPackets = 1"
+    },
+    {
+      "id": "9.1.7", "name": "Windows Firewall: Domain: Logging: Log successful connections",
+      "description": "Ghi log toàn bộ các kết nối thành công (ALLOW) đi qua tường lửa.",
+      "category": "Windows Defender Firewall / Domain Profile", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\DomainProfile\\Logging",
+      "key_name": "LogSuccessfulConnections", "expected_value": "Yes", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set LogSuccessfulConnections = 1"
+    },
+    {
+      "id": "9.2.1", "name": "Windows Firewall: Private: Firewall state",
+      "description": "Đảm bảo tường lửa (Private Profile) luôn Bật.",
+      "category": "Windows Defender Firewall / Private Profile", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\PrivateProfile",
+      "key_name": "EnableFirewall", "expected_value": "On (recommended)", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set EnableFirewall = 1"
+    },
+    {
+      "id": "9.2.2", "name": "Windows Firewall: Private: Inbound connections",
+      "description": "Chặn mặc định các kết nối từ bên ngoài nếu không khớp với bất kỳ luật cho phép nào.",
+      "category": "Windows Defender Firewall / Private Profile", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\PrivateProfile",
+      "key_name": "DefaultInboundAction", "expected_value": "Block (default)", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set DefaultInboundAction = 1"
+    },
+    {
+      "id": "9.2.3", "name": "Windows Firewall: Private: Settings: Display a notification",
+      "description": "Tắt thông báo cho người dùng khi có chương trình bị tường lửa chặn.",
+      "category": "Windows Defender Firewall / Private Profile", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\PrivateProfile",
+      "key_name": "DisableNotifications", "expected_value": "No", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set DisableNotifications = 1"
+    },
+    {
+      "id": "9.2.4", "name": "Windows Firewall: Private: Logging: Name",
+      "description": "Thiết lập đường dẫn và tên file nhật ký.",
+      "category": "Windows Defender Firewall / Private Profile", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\PrivateProfile\\Logging",
+      "key_name": "LogFilePath", "expected_value": "%SystemRoot%\\System32\\logfiles\\firewall\\privatefw.log", "expected_value_raw": "%SystemRoot%\\System32\\logfiles\\firewall\\privatefw.log", "value_type": "STRING",
+      "remediation": "Configure log file path"
+    },
+    {
+      "id": "9.2.5", "name": "Windows Firewall: Private: Logging: Size limit (KB)",
+      "description": "Đặt dung lượng file log tối thiểu 16MB.",
+      "category": "Windows Defender Firewall / Private Profile", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\PrivateProfile\\Logging",
+      "key_name": "LogFileSize", "expected_value": "16384 KB or greater", "expected_value_raw": 16384, "value_type": "DWORD",
+      "remediation": "Set LogFileSize = 16384 or greater"
+    },
+    {
+      "id": "9.2.6", "name": "Windows Firewall: Private: Logging: Log dropped packets",
+      "description": "Ghi nhận lại các gói tin bị tường lửa chặn (DROP).",
+      "category": "Windows Defender Firewall / Private Profile", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\PrivateProfile\\Logging",
+      "key_name": "LogDroppedPackets", "expected_value": "Yes", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set LogDroppedPackets = 1"
+    },
+    {
+      "id": "9.2.7", "name": "Windows Firewall: Private: Logging: Log successful connections",
+      "description": "Ghi nhận lại các kết nối được phép đi qua (ALLOW).",
+      "category": "Windows Defender Firewall / Private Profile", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\PrivateProfile\\Logging",
+      "key_name": "LogSuccessfulConnections", "expected_value": "Yes", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set LogSuccessfulConnections = 1"
+    },
+    {
+      "id": "9.3.1", "name": "Windows Firewall: Public: Firewall state",
+      "description": "Đảm bảo tường lửa (Public Profile) luôn Bật.",
+      "category": "Windows Defender Firewall / Public Profile", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\PublicProfile",
+      "key_name": "EnableFirewall", "expected_value": "On (recommended)", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set EnableFirewall = 1"
+    },
+    {
+      "id": "9.3.2", "name": "Windows Firewall: Public: Inbound connections",
+      "description": "Chặn mặc định tất cả các kết nối từ bên ngoài.",
+      "category": "Windows Defender Firewall / Public Profile", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\PublicProfile",
+      "key_name": "DefaultInboundAction", "expected_value": "Block (default)", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set DefaultInboundAction = 1"
+    },
+    {
+      "id": "9.3.3", "name": "Windows Firewall: Public: Settings: Display a notification",
+      "description": "Tắt thông báo cho người dùng khi tường lửa chặn một kết nối.",
+      "category": "Windows Defender Firewall / Public Profile", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\PublicProfile",
+      "key_name": "DisableNotifications", "expected_value": "No", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set DisableNotifications = 1"
+    },
+    {
+      "id": "9.3.4", "name": "Windows Firewall: Public: Settings: Apply local firewall rules",
+      "description": "Không cho phép áp dụng các luật tường lửa cục bộ.",
+      "category": "Windows Defender Firewall / Public Profile", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\PublicProfile",
+      "key_name": "AllowLocalPolicyMerge", "expected_value": "No", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set AllowLocalPolicyMerge = 0"
+    },
+    {
+      "id": "9.3.5", "name": "Windows Firewall: Public: Settings: Apply local connection security rules",
+      "description": "Không cho phép áp dụng các luật bảo mật kết nối cục bộ.",
+      "category": "Windows Defender Firewall / Public Profile", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\PublicProfile",
+      "key_name": "AllowLocalIPsecPolicyMerge", "expected_value": "No", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set AllowLocalIPsecPolicyMerge = 0"
+    },
+    {
+      "id": "9.3.6", "name": "Windows Firewall: Public: Logging: Name",
+      "description": "Cấu hình đường dẫn và tên file nhật ký.",
+      "category": "Windows Defender Firewall / Public Profile", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\PublicProfile\\Logging",
+      "key_name": "LogFilePath", "expected_value": "%SystemRoot%\\System32\\logfiles\\firewall\\publicfw.log", "expected_value_raw": "%SystemRoot%\\System32\\logfiles\\firewall\\publicfw.log", "value_type": "STRING",
+      "remediation": "Configure log file path"
+    },
+    {
+      "id": "9.3.7", "name": "Windows Firewall: Public: Logging: Size limit (KB)",
+      "description": "Đặt dung lượng file log tối thiểu 16MB.",
+      "category": "Windows Defender Firewall / Public Profile", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\PublicProfile\\Logging",
+      "key_name": "LogFileSize", "expected_value": "16384 KB or greater", "expected_value_raw": 16384, "value_type": "DWORD",
+      "remediation": "Set LogFileSize = 16384 or greater"
+    },
+    {
+      "id": "9.3.8", "name": "Windows Firewall: Public: Logging: Log dropped packets",
+      "description": "Ghi log toàn bộ gói tin bị chặn (DROP).",
+      "category": "Windows Defender Firewall / Public Profile", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\PublicProfile\\Logging",
+      "key_name": "LogDroppedPackets", "expected_value": "Yes", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set LogDroppedPackets = 1"
+    },
+    {
+      "id": "9.3.9", "name": "Windows Firewall: Public: Logging: Log successful connections",
+      "description": "Ghi log toàn bộ kết nối thành công (ALLOW).",
+      "category": "Windows Defender Firewall / Public Profile", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\PublicProfile\\Logging",
+      "key_name": "LogSuccessfulConnections", "expected_value": "Yes", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set LogSuccessfulConnections = 1"
+    },
+    {
+      "id": "17.1.1", "name": "Audit Credential Validation",
+      "description": "Ghi nhật ký quá trình hệ thống xác thực thông tin đăng nhập của người dùng.",
+      "category": "Advanced Audit Policy / Account Logon", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\Account Logon",
+      "key_name": "Audit Credential Validation", "expected_value": "Success and Failure", "expected_value_raw": "3", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'Credential Validation' /success:enable /failure:enable"
+    },
+    {
+      "id": "17.2.1", "name": "Audit Application Group Management",
+      "description": "Ghi log các sự kiện thay đổi đối với nhóm ứng dụng.",
+      "category": "Advanced Audit Policy / Account Management", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\Account Management",
+      "key_name": "Audit Application Group Management", "expected_value": "Success and Failure", "expected_value_raw": "3", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'Application Group Management' /success:enable /failure:enable"
+    },
+    {
+      "id": "17.2.2", "name": "Audit Security Group Management",
+      "description": "Ghi log các thay đổi liên quan đến nhóm bảo mật.",
+      "category": "Advanced Audit Policy / Account Management", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\Account Management",
+      "key_name": "Audit Security Group Management", "expected_value": "Success", "expected_value_raw": "1", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'Security Group Management' /success:enable"
+    },
+    {
+      "id": "17.2.3", "name": "Audit User Account Management",
+      "description": "Ghi log các hoạt động quản lý tài khoản người dùng.",
+      "category": "Advanced Audit Policy / Account Management", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\Account Management",
+      "key_name": "Audit User Account Management", "expected_value": "Success and Failure", "expected_value_raw": "3", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'User Account Management' /success:enable /failure:enable"
+    },
+    {
+      "id": "17.3.1", "name": "Audit PNP Activity",
+      "description": "Ghi log khi hệ thống phát hiện có thiết bị ngoại vi cắm vào máy.",
+      "category": "Advanced Audit Policy / Detailed Tracking", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\Detailed Tracking",
+      "key_name": "Audit PNP Activity", "expected_value": "Success", "expected_value_raw": "1", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'Plug and Play Events' /success:enable"
+    },
+    {
+      "id": "17.3.2", "name": "Audit Process Creation",
+      "description": "Ghi log mỗi khi có một tiến trình mới được khởi tạo và chạy trên hệ thống.",
+      "category": "Advanced Audit Policy / Detailed Tracking", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\Detailed Tracking",
+      "key_name": "Audit Process Creation", "expected_value": "Success", "expected_value_raw": "1", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'Process Creation' /success:enable"
+    },
+    {
+      "id": "17.5.1", "name": "Audit Account Lockout",
+      "description": "Ghi log khi một tài khoản bị hệ thống khóa do nhập sai mật khẩu quá nhiều lần.",
+      "category": "Advanced Audit Policy / Logon-Logoff", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\Logon-Logoff",
+      "key_name": "Audit Account Lockout", "expected_value": "Failure", "expected_value_raw": "2", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'Account Lockout' /failure:enable"
+    },
+    {
+      "id": "17.5.2", "name": "Audit Group Membership",
+      "description": "Ghi log thông tin về thành viên nhóm được cấp trong token khi người dùng đăng nhập.",
+      "category": "Advanced Audit Policy / Logon-Logoff", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\Logon-Logoff",
+      "key_name": "Audit Group Membership", "expected_value": "Success", "expected_value_raw": "1", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'Group Membership' /success:enable"
+    },
+    {
+      "id": "17.5.3", "name": "Audit Logoff",
+      "description": "Ghi log khi có người dùng thực hiện đăng xuất khỏi hệ thống.",
+      "category": "Advanced Audit Policy / Logon-Logoff", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\Logon-Logoff",
+      "key_name": "Audit Logoff", "expected_value": "Success", "expected_value_raw": "1", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'Logoff' /success:enable"
+    },
+    {
+      "id": "17.5.4", "name": "Audit Logon",
+      "description": "Ghi log tất cả các nỗ lực đăng nhập vào hệ thống.",
+      "category": "Advanced Audit Policy / Logon-Logoff", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\Logon-Logoff",
+      "key_name": "Audit Logon", "expected_value": "Success and Failure", "expected_value_raw": "3", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'Logon' /success:enable /failure:enable"
+    },
+    {
+      "id": "17.5.5", "name": "Audit Other Logon/Logoff Events",
+      "description": "Ghi log các sự kiện liên quan khác như khóa/mở khóa màn hình, mất kết nối Remote Desktop.",
+      "category": "Advanced Audit Policy / Logon-Logoff", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\Logon-Logoff",
+      "key_name": "Audit Other Logon/Logoff Events", "expected_value": "Success and Failure", "expected_value_raw": "3", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'Other Logon/Logoff Events' /success:enable /failure:enable"
+    },
+    {
+      "id": "17.5.6", "name": "Audit Special Logon",
+      "description": "Ghi log các lần đăng nhập đặc biệt sử dụng quyền tương đương Quản trị viên.",
+      "category": "Advanced Audit Policy / Logon-Logoff", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\Logon-Logoff",
+      "key_name": "Audit Special Logon", "expected_value": "Success", "expected_value_raw": "1", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'Special Logon' /success:enable"
+    },
+    {
+      "id": "17.6.1", "name": "Audit Detailed File Share",
+      "description": "Ghi log chi tiết các nỗ lực truy cập tệp/thư mục chia sẻ bị từ chối.",
+      "category": "Advanced Audit Policy / Object Access", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\Object Access",
+      "key_name": "Audit Detailed File Share", "expected_value": "Failure", "expected_value_raw": "2", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'Detailed File Share' /failure:enable"
+    },
+    {
+      "id": "17.6.2", "name": "Audit File Share",
+      "description": "Ghi log mọi nỗ lực truy cập vào thư mục chia sẻ.",
+      "category": "Advanced Audit Policy / Object Access", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\Object Access",
+      "key_name": "Audit File Share", "expected_value": "Success and Failure", "expected_value_raw": "3", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'File Share' /success:enable /failure:enable"
+    },
+    {
+      "id": "17.6.3", "name": "Audit Other Object Access Events",
+      "description": "Ghi log việc tạo, xóa, chỉnh sửa các tác vụ lên lịch (Scheduled Tasks) và đối tượng COM+.",
+      "category": "Advanced Audit Policy / Object Access", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\Object Access",
+      "key_name": "Audit Other Object Access Events", "expected_value": "Success and Failure", "expected_value_raw": "3", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'Other Object Access Events' /success:enable /failure:enable"
+    },
+    {
+      "id": "17.6.4", "name": "Audit Removable Storage",
+      "description": "Ghi log mọi hành vi đọc/ghi tệp tin trên các thiết bị lưu trữ ngoài (như USB).",
+      "category": "Advanced Audit Policy / Object Access", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\Object Access",
+      "key_name": "Audit Removable Storage", "expected_value": "Success and Failure", "expected_value_raw": "3", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'Removable Storage' /success:enable /failure:enable"
+    },
+    {
+      "id": "17.7.1", "name": "Audit Audit Policy Change",
+      "description": "Ghi log khi có sự thay đổi về chính sách Audit.",
+      "category": "Advanced Audit Policy / Policy Change", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\Policy Change",
+      "key_name": "Audit Audit Policy Change", "expected_value": "Success", "expected_value_raw": "1", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'Audit Policy Change' /success:enable"
+    },
+    {
+      "id": "17.7.2", "name": "Audit Authentication Policy Change",
+      "description": "Ghi log khi có thay đổi về chính sách xác thực.",
+      "category": "Advanced Audit Policy / Policy Change", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\Policy Change",
+      "key_name": "Audit Authentication Policy Change", "expected_value": "Success", "expected_value_raw": "1", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'Authentication Policy Change' /success:enable"
+    },
+    {
+      "id": "17.7.3", "name": "Audit Authorization Policy Change",
+      "description": "Ghi log các thay đổi liên quan đến chính sách phân quyền.",
+      "category": "Advanced Audit Policy / Policy Change", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\Policy Change",
+      "key_name": "Audit Authorization Policy Change", "expected_value": "Success", "expected_value_raw": "1", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'Authorization Policy Change' /success:enable"
+    },
+    {
+      "id": "17.7.4", "name": "Audit MPSSVC Rule-Level Policy Change",
+      "description": "Ghi log khi có bất kỳ luật tường lửa nào bị thêm, sửa, xóa.",
+      "category": "Advanced Audit Policy / Policy Change", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\Policy Change",
+      "key_name": "Audit MPSSVC Rule-Level Policy Change", "expected_value": "Success and Failure", "expected_value_raw": "3", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'MPSSVC Rule-Level Policy Change' /success:enable /failure:enable"
+    },
+    {
+      "id": "17.7.5", "name": "Audit Other Policy Change Events",
+      "description": "Ghi log các lỗi khi áp dụng Group Policy hoặc các sự cố liên quan đến hệ thống mật mã học.",
+      "category": "Advanced Audit Policy / Policy Change", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\Policy Change",
+      "key_name": "Audit Other Policy Change Events", "expected_value": "Failure", "expected_value_raw": "2", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'Other Policy Change Events' /failure:enable"
+    },
+    {
+      "id": "17.8.1", "name": "Audit Sensitive Privilege Use",
+      "description": "Ghi log khi một tài khoản hoặc dịch vụ gọi/sử dụng các đặc quyền nhạy cảm.",
+      "category": "Advanced Audit Policy / Privilege Use", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\Privilege Use",
+      "key_name": "Audit Sensitive Privilege Use", "expected_value": "Success", "expected_value_raw": "1", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'Sensitive Privilege Use' /success:enable"
+    },
+    {
+      "id": "17.9.1", "name": "Audit IPsec Driver",
+      "description": "Ghi log các hoạt động và lỗi của trình điều khiển IPsec.",
+      "category": "Advanced Audit Policy / System", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\System",
+      "key_name": "Audit IPsec Driver", "expected_value": "Success and Failure", "expected_value_raw": "3", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'IPsec Driver' /success:enable /failure:enable"
+    },
+    {
+      "id": "17.9.2", "name": "Audit Other System Events",
+      "description": "Ghi log các sự kiện hệ thống quan trọng như dịch vụ Tường lửa khởi động, bị dừng hoặc gặp lỗi.",
+      "category": "Advanced Audit Policy / System", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\System",
+      "key_name": "Audit Other System Events", "expected_value": "Success and Failure", "expected_value_raw": "3", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'Other System Events' /success:enable /failure:enable"
+    },
+    {
+      "id": "17.9.3", "name": "Audit Security State Change",
+      "description": "Ghi log sự thay đổi trạng thái hệ thống như khởi động, tắt máy, thay đổi giờ hệ thống.",
+      "category": "Advanced Audit Policy / System", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\System",
+      "key_name": "Audit Security State Change", "expected_value": "Success", "expected_value_raw": "1", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'Security State Change' /success:enable"
+    },
+    {
+      "id": "17.9.4", "name": "Audit Security System Extension",
+      "description": "Ghi log khi hệ thống tải các phần mở rộng bảo mật. Giúp phát hiện các tiến trình giả mạo.",
+      "category": "Advanced Audit Policy / System", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\System",
+      "key_name": "Audit Security System Extension", "expected_value": "Success", "expected_value_raw": "1", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'Security System Extension' /success:enable"
+    },
+    {
+      "id": "17.9.5", "name": "Audit System Integrity",
+      "description": "Ghi log các vi phạm tính toàn vẹn hệ thống.",
+      "category": "Advanced Audit Policy / System", "type": "Automated", "intervention_type": "Secedit",
+      "path": "Advanced Audit Policy Configuration\\System",
+      "key_name": "Audit System Integrity", "expected_value": "Success and Failure", "expected_value_raw": "3", "value_type": "STRING",
+      "remediation": "auditpol /set /subcategory:'System Integrity' /success:enable /failure:enable"
+    },
+    {
+      "id": "18.1.1.1", "name": "Prevent enabling lock screen camera",
+      "description": "Vô hiệu hóa công tắc bật/tắt camera trên màn hình khóa trong Cài đặt PC.",
+      "category": "Administrative Templates / Control Panel / Personalization", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization",
+      "key_name": "NoLockScreenCamera", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set NoLockScreenCamera = 1"
+    },
+    {
+      "id": "18.1.1.2", "name": "Prevent enabling lock screen slide show",
+      "description": "Vô hiệu hóa cài đặt trình chiếu hình ảnh trên màn hình khóa.",
+      "category": "Administrative Templates / Control Panel / Personalization", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization",
+      "key_name": "NoLockScreenSlideshow", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set NoLockScreenSlideshow = 1"
+    },
+    {
+      "id": "18.1.2.2", "name": "Allow users to enable online speech recognition services",
+      "description": "Vô hiệu hóa thành phần tự động học của việc cá nhân hóa đầu vào bao gồm giọng nói, viết tay và nhập liệu.",
+      "category": "Administrative Templates / Control Panel / Regional and Language Options", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\InputPersonalization",
+      "key_name": "AllowInputPersonalization", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set AllowInputPersonalization = 0"
+    },
+    {
+      "id": "18.4.1", "name": "Apply UAC restrictions to local accounts on network logons",
+      "description": "Kiểm soát việc liệu các tài khoản cục bộ có thể được sử dụng để quản trị từ xa thông qua đăng nhập mạng.",
+      "category": "Administrative Templates / MS Security Guide", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+      "key_name": "LocalAccountTokenFilterPolicy", "expected_value": "Enabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set LocalAccountTokenFilterPolicy = 0"
+    },
+    {
+      "id": "18.4.2", "name": "Configure SMB v1 client driver",
+      "description": "Cấu hình loại khởi động cho dịch vụ trình điều khiển client SMBv1, được khuyến nghị vô hiệu hóa.",
+      "category": "Administrative Templates / MS Security Guide", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\mrxsmb10",
+      "key_name": "Start", "expected_value": "Enabled: Disable driver (recommended)", "expected_value_raw": 4, "value_type": "DWORD",
+      "remediation": "Set mrxsmb10 Start = 4"
+    },
+    {
+      "id": "18.4.3", "name": "Configure SMB v1 server",
+      "description": "Cấu hình việc xử lý phía máy chủ của giao thức SMBv1.",
+      "category": "Administrative Templates / MS Security Guide", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters",
+      "key_name": "SMB1", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set SMB1 = 0"
+    },
+    {
+      "id": "18.4.4", "name": "Enable Certificate Padding",
+      "description": "Cấu hình chức năng WinVerifyTrust có thực hiện kiểm tra chữ ký Windows Authenticode nghiêm ngặt đối với các tệp PE.",
+      "category": "Administrative Templates / MS Security Guide", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\Cryptography\\Wintrust\\Config",
+      "key_name": "EnableCertPaddingCheck", "expected_value": "Enabled", "expected_value_raw": "1", "value_type": "STRING",
+      "remediation": "Set EnableCertPaddingCheck = '1'"
+    },
+    {
+      "id": "18.4.5", "name": "Enable Structured Exception Handling Overwrite Protection (SEHOP)",
+      "description": "Windows bao gồm hỗ trợ cho Bảo vệ ghi đè Trình xử lý ngoại lệ cấu trúc (SEHOP).",
+      "category": "Administrative Templates / MS Security Guide", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\kernel",
+      "key_name": "DisableExceptionChainValidation", "expected_value": "Enabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set DisableExceptionChainValidation = 0"
+    },
+    {
+      "id": "18.4.6", "name": "NetBT NodeType configuration",
+      "description": "Xác định phương thức mà NetBIOS qua TCP/IP (NetBT) sử dụng để đăng ký và giải quyết tên.",
+      "category": "Administrative Templates / MS Security Guide", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\NetBT\\Parameters",
+      "key_name": "NodeType", "expected_value": "Enabled: P-node (recommended)", "expected_value_raw": 2, "value_type": "DWORD",
+      "remediation": "Set NodeType = 2 (P-node)"
+    },
+    {
+      "id": "18.4.7", "name": "WDigest Authentication",
+      "description": "Khi xác thực WDigest được bật, Lsass.exe sẽ giữ một bản sao mật khẩu văn bản thuần (plaintext) của người dùng trong bộ nhớ.",
+      "category": "Administrative Templates / MS Security Guide", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\SecurityProviders\\WDigest",
+      "key_name": "UseLogonCredential", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set UseLogonCredential = 0"
+    },
+    {
+      "id": "18.5.1", "name": "MSS: (AutoAdminLogon) Enable Automatic Logon",
+      "description": "Nếu cấu hình máy tính để đăng nhập tự động, bất kỳ ai có quyền tiếp cận vật lý đều có thể truy cập mọi thứ.",
+      "category": "Administrative Templates / MSS (Legacy)", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon",
+      "key_name": "AutoAdminLogon", "expected_value": "Disabled", "expected_value_raw": "0", "value_type": "STRING",
+      "remediation": "Set AutoAdminLogon = '0'"
+    },
+    {
+      "id": "18.5.2", "name": "MSS: (DisableIPSourceRouting IPv6) IP source routing protection level",
+      "description": "Định tuyến nguồn IP là một cơ chế cho phép người gửi xác định lộ trình IP mà gói tin datagram nên đi qua (IPv6).",
+      "category": "Administrative Templates / MSS (Legacy)", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\Tcpip6\\Parameters",
+      "key_name": "DisableIPSourceRouting", "expected_value": "Enabled: Highest protection, source routing is completely disabled", "expected_value_raw": 2, "value_type": "DWORD",
+      "remediation": "Set DisableIPSourceRouting = 2"
+    },
+    {
+      "id": "18.5.3", "name": "MSS: (DisableIPSourceRouting) IP source routing protection level",
+      "description": "Định tuyến nguồn IP là một cơ chế cho phép người gửi xác định lộ trình IP (IPv4).",
+      "category": "Administrative Templates / MSS (Legacy)", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters",
+      "key_name": "DisableIPSourceRouting", "expected_value": "Enabled: Highest protection, source routing is completely disabled", "expected_value_raw": 2, "value_type": "DWORD",
+      "remediation": "Set DisableIPSourceRouting = 2"
+    },
+    {
+      "id": "18.5.5", "name": "MSS: (EnableICMPRedirect) Allow ICMP redirects to override OSPF generated routes",
+      "description": "Các lệnh chuyển hướng ICMP khiến ngăn xếp IPv4 tạo ra các lộ trình máy chủ, ghi đè lên các lộ trình OSPF.",
+      "category": "Administrative Templates / MSS (Legacy)", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters",
+      "key_name": "EnableICMPRedirect", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set EnableICMPRedirect = 0"
+    },
+    {
+      "id": "18.5.7", "name": "MSS: (NoNameReleaseOnDemand) Allow the computer to ignore NetBIOS name release requests except from WINS servers",
+      "description": "NetBIOS qua TCP/IP là giao thức mạng cung cấp cách thức giải quyết các tên NetBIOS thành địa chỉ IP.",
+      "category": "Administrative Templates / MSS (Legacy)", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\NetBT\\Parameters",
+      "key_name": "NoNameReleaseOnDemand", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set NoNameReleaseOnDemand = 1"
+    },
+    {
+      "id": "18.5.9", "name": "MSS: (SafeDllSearchMode) Enable Safe DLL search mode",
+      "description": "Thứ tự tìm kiếm DLL được cấu hình để ưu tiên các thư mục hệ thống trước khi tìm trong thư mục làm việc hiện tại.",
+      "category": "Administrative Templates / MSS (Legacy)", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager",
+      "key_name": "SafeDllSearchMode", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set SafeDllSearchMode = 1"
+    },
+    {
+      "id": "18.5.12", "name": "MSS: (WarningLevel) Percentage threshold for the security event log",
+      "description": "Cài đặt này tạo ra một cuộc kiểm tra bảo mật trong nhật ký sự kiện Security khi nhật ký đạt đến ngưỡng dung lượng.",
+      "category": "Administrative Templates / MSS (Legacy)", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\Eventlog\\Security",
+      "key_name": "WarningLevel", "expected_value": "Enabled: 90% or less", "expected_value_raw": 90, "value_type": "DWORD",
+      "remediation": "Set WarningLevel = 90 or less"
+    },
+    {
+      "id": "18.6.4.1", "name": "Configure multicast DNS (mDNS) protocol",
+      "description": "Xác định xem DNS client có thực hiện giải quyết tên qua Multicast DNS (mDNS) hay không.",
+      "category": "Administrative Templates / Network / DNS Client", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows NT\\DNSClient",
+      "key_name": "EnableMulticast", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set EnableMulticast = 0"
+    },
+    {
+      "id": "18.6.4.2", "name": "Configure NetBIOS settings",
+      "description": "Chỉ định liệu DNS client có thực hiện giải quyết tên qua NetBIOS hay không trên mạng công cộng.",
+      "category": "Administrative Templates / Network / DNS Client", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows NT\\DNSClient",
+      "key_name": "QueryNetBiosInParallel", "expected_value": "Enabled: Disable NetBIOS name resolution on public networks", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Configure NetBIOS to be disabled on public networks"
+    },
+    {
+      "id": "18.6.4.4", "name": "Turn off multicast name resolution (LLMNR)",
+      "description": "LLMNR là giao thức giải quyết tên phụ. Các truy vấn được gửi bằng multicast qua liên kết mạng cục bộ.",
+      "category": "Administrative Templates / Network / DNS Client", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows NT\\DNSClient",
+      "key_name": "EnableMulticast", "expected_value": "Enabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set EnableMulticast = 0 via GPO"
+    },
+    {
+      "id": "18.6.7.1", "name": "Audit client does not support encryption (SMB Server)",
+      "description": "Xác định liệu máy chủ SMB sẽ ghi lại các sự kiện khi client SMB không hỗ trợ mã hóa hay không.",
+      "category": "Administrative Templates / Network / Lanman Server", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters",
+      "key_name": "AuditClientDoesNotSupportEncryption", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set AuditClientDoesNotSupportEncryption = 1"
+    },
+    {
+      "id": "18.6.7.2", "name": "Audit client does not support signing (SMB Server)",
+      "description": "Xác định liệu máy chủ SMB sẽ ghi lại các sự kiện khi client SMB không hỗ trợ ký tên.",
+      "category": "Administrative Templates / Network / Lanman Server", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters",
+      "key_name": "AuditClientDoesNotSupportSigning", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set AuditClientDoesNotSupportSigning = 1"
+    },
+    {
+      "id": "18.6.7.3", "name": "Audit insecure guest logon (SMB Server)",
+      "description": "Xác định liệu máy chủ SMB sẽ ghi lại các sự kiện khi client đăng nhập bằng tài khoản khách.",
+      "category": "Administrative Templates / Network / Lanman Server", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters",
+      "key_name": "AuditInsecureGuestLogon", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set AuditInsecureGuestLogon = 1"
+    },
+    {
+      "id": "18.6.7.4", "name": "Enable authentication rate limiter (SMB Server)",
+      "description": "Cấu hình bộ giới hạn tốc độ xác thực của máy chủ SMB để đối phó với tấn công brute force.",
+      "category": "Administrative Templates / Network / Lanman Server", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters",
+      "key_name": "InvalidAuthenticationDelayTimeInMs", "expected_value": "Enabled", "expected_value_raw": 2000, "value_type": "DWORD",
+      "remediation": "Set InvalidAuthenticationDelayTimeInMs = 2000"
+    },
+    {
+      "id": "18.6.7.5", "name": "Enable remote mailslots (SMB Server)",
+      "description": "Kiểm soát việc liệu máy chủ SMB có sử dụng mailslot từ xa. Giao thức cũ, không đáng tin cậy và không an toàn.",
+      "category": "Administrative Templates / Network / Lanman Server", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters",
+      "key_name": "EnableMailslots", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set EnableMailslots = 0"
+    },
+    {
+      "id": "18.6.7.6", "name": "Mandate the minimum version of SMB (Server)",
+      "description": "Kiểm soát phiên bản tối thiểu của giao thức SMB có thể được sử dụng trên hệ thống.",
+      "category": "Administrative Templates / Network / Lanman Server", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters",
+      "key_name": "MinSMB2Dialect", "expected_value": "Enabled: 3.1.1", "expected_value_raw": 785, "value_type": "DWORD",
+      "remediation": "Set MinSMB2Dialect = 785 (0x311)"
+    },
+    {
+      "id": "18.6.7.7", "name": "Set authentication rate limiter delay (milliseconds)",
+      "description": "Cấu hình giá trị độ trễ khi xác thực không hợp lệ của máy chủ SMB tính bằng mili giây.",
+      "category": "Administrative Templates / Network / Lanman Server", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters",
+      "key_name": "InvalidAuthenticationDelayTimeInMs", "expected_value": "Enabled: 2000 or more", "expected_value_raw": 2000, "value_type": "DWORD",
+      "remediation": "Set InvalidAuthenticationDelayTimeInMs >= 2000"
+    },
+    {
+      "id": "18.6.8.1", "name": "Audit insecure guest logon (SMB Client)",
+      "description": "Xác định liệu client SMB sẽ ghi lại các sự kiện khi client được đăng nhập bằng tài khoản khách.",
+      "category": "Administrative Templates / Network / Lanman Workstation", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\LanmanWorkstation",
+      "key_name": "AuditInsecureGuestLogon", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set AuditInsecureGuestLogon = 1"
+    },
+    {
+      "id": "18.6.8.2", "name": "Audit server does not support encryption (SMB Client)",
+      "description": "Xác định liệu client SMB sẽ ghi lại các sự kiện khi máy chủ SMB không hỗ trợ mã hóa.",
+      "category": "Administrative Templates / Network / Lanman Workstation", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\LanmanWorkstation",
+      "key_name": "AuditServerDoesNotSupportEncryption", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set AuditServerDoesNotSupportEncryption = 1"
+    },
+    {
+      "id": "18.6.8.3", "name": "Audit server does not support signing (SMB Client)",
+      "description": "Xác định liệu client SMB sẽ ghi lại các sự kiện khi máy chủ SMB không hỗ trợ ký tên.",
+      "category": "Administrative Templates / Network / Lanman Workstation", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\LanmanWorkstation",
+      "key_name": "AuditServerDoesNotSupportSigning", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set AuditServerDoesNotSupportSigning = 1"
+    },
+    {
+      "id": "18.6.8.4", "name": "Enable insecure guest logons (SMB Client)",
+      "description": "Xác định liệu client SMB có cho phép đăng nhập khách không an toàn vào một máy chủ SMB hay không.",
+      "category": "Administrative Templates / Network / Lanman Workstation", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\LanmanWorkstation",
+      "key_name": "AllowInsecureGuestAuth", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set AllowInsecureGuestAuth = 0"
+    },
+    {
+      "id": "18.6.8.5", "name": "Enable remote mailslots (SMB Client)",
+      "description": "Kiểm soát việc liệu client SMB có sử dụng mailslot từ xa qua Multiple UNC Provider (MUP).",
+      "category": "Administrative Templates / Network / Lanman Workstation", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\LanmanWorkstation",
+      "key_name": "EnableMailslots", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set EnableMailslots = 0"
+    },
+    {
+      "id": "18.6.8.6", "name": "Mandate the minimum version of SMB (Client)",
+      "description": "Kiểm soát phiên bản tối thiểu của giao thức SMB có thể được sử dụng trên hệ thống (Client).",
+      "category": "Administrative Templates / Network / Lanman Workstation", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\LanmanWorkstation",
+      "key_name": "MinSMB2Dialect", "expected_value": "Enabled: 3.1.1", "expected_value_raw": 785, "value_type": "DWORD",
+      "remediation": "Set MinSMB2Dialect = 785 (0x311)"
+    },
+    {
+      "id": "18.6.8.7", "name": "Require Encryption (SMB Client)",
+      "description": "Kiểm soát liệu client SMB có yêu cầu mã hóa hay không.",
+      "category": "Administrative Templates / Network / Lanman Workstation", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\LanmanWorkstation",
+      "key_name": "RequireEncryption", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set RequireEncryption = 1"
+    },
+    {
+      "id": "18.6.11.2", "name": "Prohibit installation and configuration of Network Bridge",
+      "description": "Kiểm soát khả năng của người dùng trong việc cài đặt và cấu hình một Cầu nối mạng (Network Bridge).",
+      "category": "Administrative Templates / Network / Network Connections", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Network Connections",
+      "key_name": "NC_AllowNetBridge_NLA", "expected_value": "Enabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set NC_AllowNetBridge_NLA = 0"
+    },
+    {
+      "id": "18.6.11.3", "name": "Prohibit use of Internet Connection Sharing on DNS domain network",
+      "description": "Áp dụng cho tính năng Điểm phát sóng di động (Mobile Hotspot) trong Windows 10 & Server 2016.",
+      "category": "Administrative Templates / Network / Network Connections", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Network Connections",
+      "key_name": "NC_ShowSharedAccessUI", "expected_value": "Enabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set NC_ShowSharedAccessUI = 0"
+    },
+    {
+      "id": "18.6.14.1", "name": "Hardened UNC Paths",
+      "description": "Cấu hình quyền truy cập bảo mật vào các đường dẫn UNC. Yêu cầu Mutual Authentication, Integrity, Privacy cho NETLOGON và SYSVOL.",
+      "category": "Administrative Templates / Network / Network Provider", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\NetworkProvider\\HardenedPaths",
+      "key_name": "\\\\*\\NETLOGON", "expected_value": "RequireMutualAuthentication=1, RequireIntegrity=1, RequirePrivacy=1", "expected_value_raw": "RequireMutualAuthentication=1, RequireIntegrity=1, RequirePrivacy=1", "value_type": "STRING",
+      "remediation": "Configure hardened UNC paths via GPO"
+    },
+    {
+      "id": "18.6.21.1", "name": "Minimize the number of simultaneous connections to the Internet or a Windows Domain",
+      "description": "Ngăn máy tính thiết lập nhiều kết nối đồng thời vào Internet hoặc vào một Windows domain.",
+      "category": "Administrative Templates / Network / Windows Connection Manager", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WcmSvc\\GroupPolicy",
+      "key_name": "fMinimizeConnections", "expected_value": "Enabled: 3 = Prevent Wi-Fi when on Ethernet", "expected_value_raw": 3, "value_type": "DWORD",
+      "remediation": "Set fMinimizeConnections = 3"
+    },
+    {
+      "id": "18.6.21.2", "name": "Prohibit connection to non-domain networks when connected to domain authenticated network",
+      "description": "Ngăn máy tính kết nối đồng thời vào cả mạng dựa trên domain và mạng không dựa trên domain.",
+      "category": "Administrative Templates / Network / Windows Connection Manager", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WcmSvc\\GroupPolicy",
+      "key_name": "fBlockNonDomain", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set fBlockNonDomain = 1"
+    },
+    {
+      "id": "18.6.23.2.1", "name": "Allow Windows to automatically connect to suggested open hotspots",
+      "description": "Ngăn người dùng kết nối với các điểm phát sóng mở được gợi ý, mạng được chia sẻ bởi danh bạ.",
+      "category": "Administrative Templates / Network / WLAN", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\WcmSvc\\wifinetworkmanager\\config",
+      "key_name": "AutoConnectAllowedOEM", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set AutoConnectAllowedOEM = 0"
+    },
+    {
+      "id": "18.7.1", "name": "Allow Print Spooler to accept client connections",
+      "description": "Kiểm soát việc liệu dịch vụ Print Spooler có chấp nhận các kết nối từ client hay không.",
+      "category": "Administrative Templates / Printers", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows NT\\Printers",
+      "key_name": "RegisterSpoolerRemoteRpcEndPoint", "expected_value": "Disabled", "expected_value_raw": 2, "value_type": "DWORD",
+      "remediation": "Set RegisterSpoolerRemoteRpcEndPoint = 2"
+    },
+    {
+      "id": "18.7.2", "name": "Configure Redirection Guard",
+      "description": "Xác định liệu Redirection Guard có được bật cho trình quản lý in (print spooler) hay không.",
+      "category": "Administrative Templates / Printers", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows NT\\Printers",
+      "key_name": "RedirectionGuardPolicy", "expected_value": "Enabled: Redirection Guard Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set RedirectionGuardPolicy = 1"
+    },
+    {
+      "id": "18.7.10", "name": "Limits print driver installation to Administrators",
+      "description": "Kiểm soát việc liệu những người dùng không phải Quản trị viên có thể cài đặt trình điều khiển máy in.",
+      "category": "Administrative Templates / Printers", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows NT\\Printers",
+      "key_name": "RestrictDriverInstallationToAdministrators", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set RestrictDriverInstallationToAdministrators = 1"
+    },
+    {
+      "id": "18.9.3.1", "name": "Include command line in process creation events",
+      "description": "Ghi lại chuỗi lệnh (command line) của quá trình tạo tiến trình vào sự kiện audit.",
+      "category": "Administrative Templates / System / Audit Process Creation", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\Audit",
+      "key_name": "ProcessCreationIncludeCmdLine_Enabled", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set ProcessCreationIncludeCmdLine_Enabled = 1"
+    },
+    {
+      "id": "18.9.4.1", "name": "Encryption Oracle Remediation",
+      "description": "Giảm thiểu lỗ hổng mã hóa CredSSP bằng cách buộc các máy khách và máy chủ cập nhật bản vá bảo mật.",
+      "category": "Administrative Templates / System / Credentials Delegation", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\CredSSP\\Parameters",
+      "key_name": "AllowEncryptionOracle", "expected_value": "Enabled: Force Updated Clients", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set AllowEncryptionOracle = 0"
+    },
+    {
+      "id": "18.9.4.2", "name": "Remote host allows delegation of non-exportable credentials",
+      "description": "Kích hoạt Restricted Admin Mode/Remote Credential Guard, ngăn việc lưu thông tin đăng nhập trong bộ nhớ trên máy chủ từ xa.",
+      "category": "Administrative Templates / System / Credentials Delegation", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\CredentialsDelegation",
+      "key_name": "AllowProtectedCreds", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set AllowProtectedCreds = 1"
+    },
+    {
+      "id": "18.9.5.1", "name": "Turn On Virtualization Based Security",
+      "description": "Bật bảo mật dựa trên ảo hóa (VBS), cô lập các quy trình hệ thống quan trọng khỏi hệ điều hành.",
+      "category": "Administrative Templates / System / Device Guard", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeviceGuard",
+      "key_name": "EnableVirtualizationBasedSecurity", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set EnableVirtualizationBasedSecurity = 1"
+    },
+    {
+      "id": "18.9.5.2", "name": "Turn On Virtualization Based Security: Select Platform Security Level",
+      "description": "Yêu cầu VBS phải chạy cùng Secure Boot để đảm bảo tính toàn vẹn của nền tảng.",
+      "category": "Administrative Templates / System / Device Guard", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeviceGuard",
+      "key_name": "RequirePlatformSecurityFeatures", "expected_value": "Secure Boot or higher", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set RequirePlatformSecurityFeatures = 1"
+    },
+    {
+      "id": "18.9.5.3", "name": "Turn On Virtualization Based Security: Virtualization Based Protection of Code Integrity",
+      "description": "Bảo vệ tính toàn vẹn mã dựa trên ảo hóa, khóa bằng UEFI để chống mã độc sửa đổi cài đặt.",
+      "category": "Administrative Templates / System / Device Guard", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeviceGuard",
+      "key_name": "HypervisorEnforcedCodeIntegrity", "expected_value": "Enabled with UEFI lock", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set HypervisorEnforcedCodeIntegrity = 1"
+    },
+    {
+      "id": "18.9.5.5", "name": "Turn On Virtualization Based Security: Credential Guard Configuration",
+      "description": "Bật Credential Guard kèm khóa UEFI để lưu trữ thông tin xác thực an toàn.",
+      "category": "Administrative Templates / System / Device Guard", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeviceGuard",
+      "key_name": "LsaCfgFlags", "expected_value": "Enabled with UEFI lock", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set LsaCfgFlags = 1"
+    },
+    {
+      "id": "18.9.27.1", "name": "Allow Custom SSPs and APs to be loaded into LSASS",
+      "description": "Không cho phép load các gói SSPs/APs tùy chỉnh vào quy trình LSASS.",
+      "category": "Administrative Templates / System / Local Security Authority", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+      "key_name": "AllowCustomSSPsAPs", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set AllowCustomSSPsAPs = 0"
+    },
+    {
+      "id": "18.9.27.2", "name": "Configures LSASS to run as a protected process",
+      "description": "Cấu hình chạy LSASS như một quy trình được bảo vệ chặt chẽ và khóa bằng phần sụn UEFI.",
+      "category": "Administrative Templates / System / Local Security Authority", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+      "key_name": "RunAsPPL", "expected_value": "Enabled: Enabled with UEFI Lock", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set RunAsPPL = 1"
+    },
+    {
+      "id": "18.9.29.1", "name": "Block user from showing account details on sign-in",
+      "description": "Chặn hiển thị thông tin tài khoản/email trên màn hình khóa hoặc màn hình đăng nhập.",
+      "category": "Administrative Templates / System / Logon", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+      "key_name": "BlockUserFromShowingAccountDetailsOnSignin", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set BlockUserFromShowingAccountDetailsOnSignin = 1"
+    },
+    {
+      "id": "18.9.29.2", "name": "Do not display network selection UI",
+      "description": "Không hiển thị giao diện tùy chọn kết nối mạng ở màn hình đăng nhập.",
+      "category": "Administrative Templates / System / Logon", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+      "key_name": "DontDisplayNetworkSelectionUI", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set DontDisplayNetworkSelectionUI = 1"
+    },
+    {
+      "id": "18.9.29.3", "name": "Do not enumerate connected users on domain-joined computers",
+      "description": "Chặn liệt kê danh sách người dùng đã kết nối ở máy tính trong domain.",
+      "category": "Administrative Templates / System / Logon", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+      "key_name": "DontEnumerateConnectedUsers", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set DontEnumerateConnectedUsers = 1"
+    },
+    {
+      "id": "18.9.29.4", "name": "Enumerate local users on domain-joined computers",
+      "description": "Vô hiệu hóa việc hiển thị tên các người dùng cục bộ tại giao diện đăng nhập.",
+      "category": "Administrative Templates / System / Logon", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+      "key_name": "EnumerateLocalUsers", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set EnumerateLocalUsers = 0"
+    },
+    {
+      "id": "18.9.29.5", "name": "Turn off app notifications on the lock screen",
+      "description": "Tắt toàn bộ thông báo từ ứng dụng trên màn hình khóa.",
+      "category": "Administrative Templates / System / Logon", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+      "key_name": "DisableLockScreenAppNotifications", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set DisableLockScreenAppNotifications = 1"
+    },
+    {
+      "id": "18.9.29.6", "name": "Turn off picture password sign-in",
+      "description": "Vô hiệu hóa tính năng đăng nhập bằng Picture Password (kém bảo mật).",
+      "category": "Administrative Templates / System / Logon", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+      "key_name": "BlockDomainPicturePassword", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set BlockDomainPicturePassword = 1"
+    },
+    {
+      "id": "18.9.29.7", "name": "Turn on convenience PIN sign-in",
+      "description": "Vô hiệu hóa đăng nhập bằng mã PIN tiện lợi. Nên dùng Windows Hello for Business.",
+      "category": "Administrative Templates / System / Logon", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+      "key_name": "AllowDomainPINLogon", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set AllowDomainPINLogon = 0"
+    },
+    {
+      "id": "18.9.33.1", "name": "Allow Clipboard synchronization across devices",
+      "description": "Cấm đồng bộ hóa khay nhớ tạm (Clipboard) giữa các thiết bị để tránh rò rỉ dữ liệu nhạy cảm.",
+      "category": "Administrative Templates / System / OS Policies", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+      "key_name": "AllowCrossDeviceClipboard", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set AllowCrossDeviceClipboard = 0"
+    },
+    {
+      "id": "18.9.33.2", "name": "Allow upload of User Activities",
+      "description": "Ngăn gửi lịch sử hoạt động của người dùng lên Microsoft.",
+      "category": "Administrative Templates / System / OS Policies", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+      "key_name": "UploadUserActivities", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set UploadUserActivities = 0"
+    },
+    {
+      "id": "18.9.35.6.5", "name": "Require a password when a computer wakes (on battery)",
+      "description": "Bắt buộc phải nhập lại mật khẩu khi đánh thức máy tính từ chế độ ngủ (sử dụng pin).",
+      "category": "Administrative Templates / System / Power Management", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Power\\PowerSettings\\0e796bdb-100d-47d6-a2d5-f7d2daa51f51",
+      "key_name": "DCSettingIndex", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set DCSettingIndex = 1"
+    },
+    {
+      "id": "18.9.35.6.6", "name": "Require a password when a computer wakes (plugged in)",
+      "description": "Bắt buộc nhập mật khẩu khi đánh thức máy từ chế độ ngủ (đang cắm sạc).",
+      "category": "Administrative Templates / System / Power Management", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Power\\PowerSettings\\0e796bdb-100d-47d6-a2d5-f7d2daa51f51",
+      "key_name": "ACSettingIndex", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set ACSettingIndex = 1"
+    },
+    {
+      "id": "18.9.38.1", "name": "Enable RPC Endpoint Mapper Client Authentication",
+      "description": "Yêu cầu máy khách xác thực với máy chủ ánh xạ điểm cuối RPC.",
+      "category": "Administrative Templates / System / Remote Procedure Call", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows NT\\Rpc",
+      "key_name": "EnableAuthEpResolution", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set EnableAuthEpResolution = 1"
+    },
+    {
+      "id": "18.9.38.2", "name": "Restrict Unauthenticated RPC clients",
+      "description": "Cấm các máy khách không được xác thực giao tiếp với RPC Server.",
+      "category": "Administrative Templates / System / Remote Procedure Call", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows NT\\Rpc",
+      "key_name": "RestrictRemoteClients", "expected_value": "Enabled: Authenticated", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set RestrictRemoteClients = 1"
+    },
+    {
+      "id": "18.9.51.1", "name": "Turn off the advertising ID",
+      "description": "Vô hiệu hóa ID quảng cáo được sử dụng để theo dõi hành vi người dùng.",
+      "category": "Administrative Templates / System / User Profiles", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\AdvertisingInfo",
+      "key_name": "DisabledByGroupPolicy", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set DisabledByGroupPolicy = 1"
+    },
+    {
+      "id": "18.9.53.1.1", "name": "Enable Windows NTP Client",
+      "description": "Bật máy khách Network Time Protocol (NTP) để đảm bảo đồng bộ thời gian.",
+      "category": "Administrative Templates / System / Windows Time Service", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\W32Time\\TimeProviders\\NtpClient",
+      "key_name": "Enabled", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set Enabled = 1"
+    },
+    {
+      "id": "18.9.53.1.2", "name": "Enable Windows NTP Server",
+      "description": "Vô hiệu hóa dịch vụ máy chủ NTP trên thiết bị máy khách.",
+      "category": "Administrative Templates / System / Windows Time Service", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\W32Time\\TimeProviders\\NtpServer",
+      "key_name": "Enabled", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set Enabled = 0"
+    },
+    {
+      "id": "18.9.54", "name": "Configure the behavior of the sudo command",
+      "description": "Tắt tính năng lệnh sudo trên Windows để tránh rủi ro bảo mật leo thang đặc quyền.",
+      "category": "Administrative Templates / System", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Sudo",
+      "key_name": "Enabled", "expected_value": "Enabled: Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set Sudo Enabled = 0"
+    },
+    {
+      "id": "18.10.8.1", "name": "Disallow Autoplay for non-volume devices",
+      "description": "Chặn tự động kích hoạt (Autoplay) cho các thiết bị điện thoại/máy ảnh kết nối qua MTP.",
+      "category": "Administrative Templates / Windows Components / AutoPlay Policies", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer",
+      "key_name": "NoAutoplayfornonVolume", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set NoAutoplayfornonVolume = 1"
+    },
+    {
+      "id": "18.10.8.2", "name": "Set the default behavior for AutoRun",
+      "description": "Ngăn cản hệ thống tự động thực thi các lệnh cài đặt từ file autorun.inf.",
+      "category": "Administrative Templates / Windows Components / AutoPlay Policies", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+      "key_name": "NoAutorun", "expected_value": "Enabled: Do not execute any autorun commands", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set NoAutorun = 1"
+    },
+    {
+      "id": "18.10.8.3", "name": "Turn off Autoplay",
+      "description": "Vô hiệu hóa tính năng Autoplay trên toàn bộ các phân vùng ổ đĩa (kể cả USB).",
+      "category": "Administrative Templates / Windows Components / AutoPlay Policies", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+      "key_name": "NoDriveTypeAutoRun", "expected_value": "Enabled: All drives", "expected_value_raw": 255, "value_type": "DWORD",
+      "remediation": "Set NoDriveTypeAutoRun = 255"
+    },
+    {
+      "id": "18.10.13.1", "name": "Turn off cloud consumer account state content",
+      "description": "Ngăn chặn việc sử dụng các tài khoản cá nhân để tải các nội dung trải nghiệm đám mây lên hệ thống doanh nghiệp.",
+      "category": "Administrative Templates / Windows Components / Cloud Content", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent",
+      "key_name": "DisableConsumerAccountStateContent", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set DisableConsumerAccountStateContent = 1"
+    },
+    {
+      "id": "18.10.13.3", "name": "Turn off Microsoft consumer experiences",
+      "description": "Tắt các trải nghiệm người dùng cá nhân của Microsoft trên máy trạm doanh nghiệp.",
+      "category": "Administrative Templates / Windows Components / Cloud Content", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent",
+      "key_name": "DisableWindowsConsumerFeatures", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set DisableWindowsConsumerFeatures = 1"
+    },
+    {
+      "id": "18.10.16.1", "name": "Allow Diagnostic Data",
+      "description": "Hạn chế thu thập dữ liệu chẩn đoán từ xa (telemetry) để bảo vệ quyền riêng tư.",
+      "category": "Administrative Templates / Windows Components / Data Collection and Preview Builds", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection",
+      "key_name": "AllowTelemetry", "expected_value": "Enabled: Diagnostic data off", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set AllowTelemetry = 0"
+    },
+    {
+      "id": "18.10.41.1", "name": "Block all consumer Microsoft account user authentication",
+      "description": "Cấm đăng nhập hoặc xác thực thiết bị bằng các tài khoản cá nhân như @outlook.com hoặc @hotmail.com.",
+      "category": "Administrative Templates / Windows Components / Microsoft Account", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\MicrosoftAccount",
+      "key_name": "DisableUserAuth", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set DisableUserAuth = 1"
+    },
+    {
+      "id": "18.10.42.6.1.1", "name": "Configure Attack Surface Reduction rules",
+      "description": "Kích hoạt tính năng giảm bề mặt tấn công (ASR) của Microsoft Defender.",
+      "category": "Administrative Templates / Windows Components / Microsoft Defender Antivirus", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows Defender\\Windows Defender Exploit Guard\\ASR",
+      "key_name": "ExploitGuard_ASR_Rules", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set ExploitGuard_ASR_Rules = 1"
+    },
+    {
+      "id": "18.10.50.1", "name": "Prevent the usage of OneDrive for file storage",
+      "description": "Vô hiệu hóa ứng dụng OneDrive trong hệ thống Windows để ngăn chặn tải dữ liệu lên đám mây cá nhân.",
+      "category": "Administrative Templates / Windows Components / OneDrive", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\OneDrive",
+      "key_name": "DisableFileSyncNGSC", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set DisableFileSyncNGSC = 1"
+    },
+    {
+      "id": "18.10.57.2.3", "name": "Do not allow passwords to be saved",
+      "description": "Không cho phép người dùng lưu mật khẩu khi sử dụng kết nối Remote Desktop Client.",
+      "category": "Administrative Templates / Windows Components / Remote Desktop Services / RD Client", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows NT\\Terminal Services",
+      "key_name": "DisablePasswordSaving", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set DisablePasswordSaving = 1"
+    },
+    {
+      "id": "18.10.59.3", "name": "Allow Cortana",
+      "description": "Vô hiệu hóa Cortana để ngăn chặn rủi ro lộ lọt thông tin thông qua lệnh tìm kiếm và ghi âm.",
+      "category": "Administrative Templates / Windows Components / Search", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search",
+      "key_name": "AllowCortana", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set AllowCortana = 0"
+    },
+    {
+      "id": "18.10.59.4", "name": "Allow Cortana above lock screen",
+      "description": "Vô hiệu hóa Cortana khi thiết bị đang ở màn hình khóa.",
+      "category": "Administrative Templates / Windows Components / Search", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search",
+      "key_name": "AllowCortanaAboveLock", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set AllowCortanaAboveLock = 0"
+    },
+    {
+      "id": "18.10.77.2.1", "name": "Configure Windows Defender SmartScreen",
+      "description": "Bật tính năng SmartScreen cho Explorer để chặn các file thực thi không xác định.",
+      "category": "Administrative Templates / Windows Components / Windows Defender SmartScreen", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+      "key_name": "EnableSmartScreen", "expected_value": "Enabled: Warn and prevent bypass", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set EnableSmartScreen = 1 with ShellSmartScreenLevel = Block"
+    },
+    {
+      "id": "18.10.82.1", "name": "Allow user control over installs",
+      "description": "Cấm người dùng quyền can thiệp vào các tùy chọn cấu hình bảo mật nội bộ trong quá trình dùng Windows Installer.",
+      "category": "Administrative Templates / Windows Components / Windows Installer", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Installer",
+      "key_name": "EnableUserControl", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set EnableUserControl = 0"
+    },
+    {
+      "id": "18.10.82.2", "name": "Always install with elevated privileges",
+      "description": "Ngăn chặn các gói MSI cài đặt bằng quyền quản trị cao nhất đối với phần mềm do người dùng thường tải xuống.",
+      "category": "Administrative Templates / Windows Components / Windows Installer", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Installer",
+      "key_name": "AlwaysInstallElevated", "expected_value": "Disabled", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set AlwaysInstallElevated = 0"
+    },
+    {
+      "id": "18.10.88.1", "name": "Turn on PowerShell Script Block Logging",
+      "description": "Buộc ghi nhật ký toàn bộ nội dung khối script PowerShell đã chạy.",
+      "category": "Administrative Templates / Windows Components / Windows PowerShell", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\PowerShell\\ScriptBlockLogging",
+      "key_name": "EnableScriptBlockLogging", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set EnableScriptBlockLogging = 1"
+    },
+    {
+      "id": "18.10.88.2", "name": "Turn on PowerShell Transcription",
+      "description": "Bật chế độ ghi toàn bộ đầu ra và đầu vào từ cửa sổ dòng lệnh PowerShell vào nhật ký lưu trữ.",
+      "category": "Administrative Templates / Windows Components / Windows PowerShell", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\PowerShell\\Transcription",
+      "key_name": "EnableTranscripting", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set EnableTranscripting = 1"
+    },
+    {
+      "id": "18.10.94.2.4", "name": "Remove access to 'Pause updates' feature",
+      "description": "Gỡ bỏ tính năng cho phép người dùng ấn tạm dừng (Pause) các bản cập nhật Windows.",
+      "category": "Administrative Templates / Windows Components / Windows Update", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate",
+      "key_name": "SetDisablePauseUXAccess", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set SetDisablePauseUXAccess = 1"
+    },
+    {
+      "id": "18.10.94.4.2", "name": "Select when Quality Updates are received",
+      "description": "Không cho phép trì hoãn các bản cập nhật chất lượng/bảo mật, bắt buộc tải ngay khi vừa ra mắt (0 ngày).",
+      "category": "Administrative Templates / Windows Components / Windows Update", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate",
+      "key_name": "DeferQualityUpdates", "expected_value": "Enabled: 0 days", "expected_value_raw": 0, "value_type": "DWORD",
+      "remediation": "Set DeferQualityUpdatesPeriodInDays = 0"
+    },
+    {
+      "id": "19.5.1.1", "name": "Turn off toast notifications on the lock screen",
+      "description": "Tắt tất cả các thông báo nổi (toast) hiện lên màn hình khóa để không lộ tin nhắn, email nội dung nhạy cảm.",
+      "category": "User Configuration / Administrative Templates / Start Menu and Taskbar", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKCU\\SOFTWARE\\Policies\\Microsoft\\Windows\\CurrentVersion\\PushNotifications",
+      "key_name": "NoToastApplicationNotificationOnLockScreen", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set NoToastApplicationNotificationOnLockScreen = 1"
+    },
+    {
+      "id": "19.7.5.1", "name": "Do not preserve zone information in file attachments",
+      "description": "Bắt buộc hệ thống phải bảo tồn thẻ thông tin đánh dấu vùng nguồn gốc (Mark of the Web) trên mọi file đính kèm.",
+      "category": "User Configuration / Administrative Templates / Windows Components / Attachment Manager", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Attachments",
+      "key_name": "SaveZoneInformation", "expected_value": "Disabled", "expected_value_raw": 2, "value_type": "DWORD",
+      "remediation": "Set SaveZoneInformation = 2"
+    },
+    {
+      "id": "19.7.5.2", "name": "Notify antivirus programs when opening attachments",
+      "description": "Yêu cầu Windows luôn gọi phần mềm diệt virus kiểm tra mỗi khi người dùng mở các file đính kèm.",
+      "category": "User Configuration / Administrative Templates / Windows Components / Attachment Manager", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Attachments",
+      "key_name": "ScanWithAntiVirus", "expected_value": "Enabled", "expected_value_raw": 3, "value_type": "DWORD",
+      "remediation": "Set ScanWithAntiVirus = 3"
+    },
+    {
+      "id": "19.7.26.1", "name": "Prevent users from sharing files within their profile",
+      "description": "Ngăn cản người dùng chia sẻ trực tiếp các thư mục và file nằm trong thư mục hồ sơ cá nhân ra ngoài mạng.",
+      "category": "User Configuration / Administrative Templates / Windows Components / Network Sharing", "type": "Automated", "intervention_type": "Registry",
+      "path": "HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+      "key_name": "NoInplaceSharing", "expected_value": "Enabled", "expected_value_raw": 1, "value_type": "DWORD",
+      "remediation": "Set NoInplaceSharing = 1"
+    }
+  ]
+}
