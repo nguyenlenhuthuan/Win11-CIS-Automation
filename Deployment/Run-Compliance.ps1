@@ -58,7 +58,6 @@ $RawResults = Invoke-Command -Session $Sessions -ScriptBlock {
 Write-Host "--- [4] DANG TONG HOP DU LIEU KIEM TOAN... ---" -ForegroundColor Yellow
 $ReportBefore = @()
 $ReportAfter = @()
-
 foreach ($Item in $RawResults) {
     $Hostname = $Item.PSComputerName
     $DataBefore = $Item.Before | ConvertFrom-Json
@@ -85,11 +84,9 @@ foreach ($Item in $RawResults) {
         }
     }
 }
-
 $ReportBefore | Export-Csv -Path $LogBefore -NoTypeInformation -Encoding UTF8
 $ReportAfter | Export-Csv -Path $LogAfter -NoTypeInformation -Encoding UTF8
 Write-Host "--- [5] HOAN TAT! Bao cao truoc fix: $LogBefore ---" -ForegroundColor Green
 Write-Host "--- [5] HOAN TAT! Bao cao sau fix: $LogAfter ---" -ForegroundColor Green
-
 # Dọn dẹp phiên kết nối
 Remove-PSSession -Session $Sessions
