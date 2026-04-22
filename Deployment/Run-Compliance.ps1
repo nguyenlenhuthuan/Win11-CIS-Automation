@@ -2,7 +2,7 @@ $Clients = @("172.16.100.11", "172.16.100.12")
 $LogBefore = "..\Logs\Compliance_Report_Before.csv"
 $LogAfter = "..\Logs\Compliance_Report_After.csv"
 
-Write-Host ">>> [1] KHOI DONG LUONG DIEU PHOI WINRM <<<" -ForegroundColor Cyan
+Write-Host "--- [1] KHOI DONG LUONG DIEU PHOI WINRM ---" -ForegroundColor Cyan
 
 # 1. Tạo phiên kết nối WinRM đa luồng đến các máy Client
 $Password = ConvertTo-SecureString "nguyendinhtri" -AsPlainText -Force
@@ -10,7 +10,7 @@ $Credentials = New-Object System.Management.Automation.PSCredential ("pca", $Pas
 $Sessions = New-PSSession -ComputerName $Clients -Credential $Credentials
 
 # 2. Chuẩn bị môi trường và đẩy file sang Client
-Write-Host ">>> [2] DANG DONG GOI VA DAY SCRIPT SANG CLIENTS... <<<" -ForegroundColor Yellow
+Write-Host "--- [2] DANG DONG GOI VA DAY SCRIPT SANG CLIENTS... ---" -ForegroundColor Yellow
 Invoke-Command -Session $Sessions -ScriptBlock {
     if (!(Test-Path "C:\CIS_Temp")) { New-Item -ItemType Directory -Force -Path "C:\CIS_Temp" | Out-Null }
 }
@@ -22,7 +22,7 @@ foreach ($s in $Sessions) {
 }
 
 # 3. Ra lệnh cho Client tự động chạy tiến trình ngầm (Re-Audit)
-Write-Host ">>> [3] DANG THUC THI AUDIT & REMEDIATE TREN CLIENTS... <<<" -ForegroundColor Yellow
+Write-Host "--- [3] DANG THUC THI AUDIT & REMEDIATE TREN CLIENTS... ---" -ForegroundColor Yellow
 $RawResults = Invoke-Command -Session $Sessions -ScriptBlock {
     Set-ExecutionPolicy Bypass -Scope Process -Force
     Set-Location "C:\CIS_Temp"
@@ -37,15 +37,10 @@ $RawResults = Invoke-Command -Session $Sessions -ScriptBlock {
     Invoke-CISRemediate -AuditResultPath ".\Audit_Before.json"
 
     # =====================================================================
-    TỰ ĐỘNG PHÁ KHÓA VÀ GIỮ ĐƯỜNG TRUYỀN WINRM
+    # TỰ ĐỘNG PHÁ KHÓA VÀ GIỮ ĐƯỜNG TRUYỀN WINRM
     # =====================================================================
-    # 1. Xóa sạch chính sách Firewall của CIS
     Remove-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall" -Recurse -Force -ErrorAction SilentlyContinue
-    
-    # 2. Tắt Firewall toàn bộ
     Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
-    
-    # 3. Ép mở lại cấu hình Remoting và chọc thủng tường lửa cho cổng 5985
     Enable-PSRemoting -SkipNetworkProfileCheck -Force
     Set-NetFirewallRule -Name "WINRM-HTTP-In-TCP" -RemoteAddress Any -Action Allow -ErrorAction SilentlyContinue
     # =====================================================================
@@ -60,7 +55,7 @@ $RawResults = Invoke-Command -Session $Sessions -ScriptBlock {
 }
 
 # 4. Server tổng hợp dữ liệu và xuất 2 báo cáo CSV
-Write-Host ">>> [4] DANG TONG HOP DU LIEU KIEM TOAN... <<<" -ForegroundColor Yellow
+Write-Host "--- [4] DANG TONG HOP DU LIEU KIEM TOAN... ---" -ForegroundColor Yellow
 $ReportBefore = @()
 $ReportAfter = @()
 
@@ -93,8 +88,8 @@ foreach ($Item in $RawResults) {
 
 $ReportBefore | Export-Csv -Path $LogBefore -NoTypeInformation -Encoding UTF8
 $ReportAfter | Export-Csv -Path $LogAfter -NoTypeInformation -Encoding UTF8
-Write-Host ">>> [5] HOAN TAT! Bao cao truoc fix: $LogBefore <<<" -ForegroundColor Green
-Write-Host ">>> [5] HOAN TAT! Bao cao sau fix: $LogAfter <<<" -ForegroundColor Green
+Write-Host "--- [5] HOAN TAT! Bao cao truoc fix: $LogBefore ---" -ForegroundColor Green
+Write-Host "--- [5] HOAN TAT! Bao cao sau fix: $LogAfter ---" -ForegroundColor Green
 
 # Dọn dẹp phiên kết nối
 Remove-PSSession -Session $Sessions
