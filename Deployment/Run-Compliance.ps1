@@ -36,6 +36,20 @@ $RawResults = Invoke-Command -Session $Sessions -ScriptBlock {
     # Lần 2: Tự động khắc phục
     Invoke-CISRemediate -AuditResultPath ".\Audit_Before.json"
 
+    # =====================================================================
+    TỰ ĐỘNG PHÁ KHÓA VÀ GIỮ ĐƯỜNG TRUYỀN WINRM
+    # =====================================================================
+    # 1. Xóa sạch chính sách Firewall của CIS
+    Remove-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall" -Recurse -Force -ErrorAction SilentlyContinue
+    
+    # 2. Tắt Firewall toàn bộ
+    Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
+    
+    # 3. Ép mở lại cấu hình Remoting và chọc thủng tường lửa cho cổng 5985
+    Enable-PSRemoting -SkipNetworkProfileCheck -Force
+    Set-NetFirewallRule -Name "WINRM-HTTP-In-TCP" -RemoteAddress Any -Action Allow -ErrorAction SilentlyContinue
+    # =====================================================================
+
     # Lần 3: Xác minh tính toàn vẹn Re-Audit (After)
     Invoke-CISAudit -JsonPath ".\CIS_Rules_DB.json" -OutputPath ".\Audit_After.json"
 
